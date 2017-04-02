@@ -190,7 +190,7 @@
 													<a href="#bruschettetomato"> Bruschette with Tomatoes </a>
 												</div>
 												<div class="back face">
-													<a href="#bruschettetomato"> Bruschette with Tomatoes </a>
+													<a> Bruschette with Tomatoes </a>
 												</div>
 											</div>
 										</div>
@@ -206,7 +206,7 @@
 													<a href="#rolls"> Green Rolls </a>
 												</div>
 												<div class="back face">
-													<a href="#rolls"> Green Rolls </a>
+													<a> Green Rolls </a>
 												</div>
 											</div>
 										</div>
@@ -228,7 +228,7 @@
 													<a href="#eggplants">Eggplants </a>
 												</div>
 												<div class="back face">
-													<a href="#eggplants"> Eggplants </a>
+													<a> Eggplants </a>
 												</div>
 											</div>
 										</div>
@@ -245,7 +245,7 @@
 													<a href="#bruschette">Bruschette </a>
 												</div>
 												<div class="back face">
-													<a href="#bruschette"> Bruschette </a>
+													<a> Bruschette </a>
 												</div>
 											</div>
 										</div>
@@ -266,7 +266,7 @@
 													<a href="#meatballs">Meatballs </a>
 												</div>
 												<div class="back face">
-													<a href="#meatballs"> Meatballs </a>
+													<a> Meatballs </a>
 												</div>
 											</div>
 										</div>
@@ -282,7 +282,7 @@
 													<a href="#beans">Spicy Beans</a>
 												</div>
 												<div class="back face">
-													<a href="#beans">Spicy Beans </a>
+													<a>Spicy Beans </a>
 												</div>
 											</div>
 										</div>

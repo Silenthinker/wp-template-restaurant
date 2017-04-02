@@ -8,11 +8,11 @@
 <link href="https://fonts.googleapis.com/css?family=Kreon"
 	rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
-<link href="<?php bloginfo('template_directory'); ?>/assets/css/style.css" rel="stylesheet" type="text/css">
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script src="<?php bloginfo('template_directory'); ?>/assets/js/home.js"></script>
-<script src="<?php bloginfo('template_directory'); ?>/assets/js/menu.js"></script>
+<script type="text/javascript">
+	var imageUrl = '<?= get_bloginfo("template_url"); ?>/images/';
+</script>
 <?php wp_head(); ?>
 </head>
 <body>
