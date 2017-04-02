@@ -175,7 +175,6 @@ $(document).ready(function(){
 	// disable scrolling in case of popup
 	var scrollElem = ((navigator.userAgent.toLowerCase().indexOf('webkit') != -1) ? 'body' : 'html');
 	var scrollTop;
-	alert("test");
 	// make div.view-content clickable
 	$('div.view-content').on('click', function() {
 		scrollTop = $(scrollElem).scrollTop();
