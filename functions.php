@@ -200,7 +200,7 @@
 	         		background-color: <?php echo get_theme_mod('background_color_scheme', '#443333'); ?>;
 	         	}
 	         	section.welcome{
-	         		background-image: url(<?php echo get_theme_mod('head_background_image_setting');?>);
+	         		background-image: url(<?php echo get_theme_mod('head_background_image_setting', get_template_directory_uri() . '/images/header.jpg');?>);
 	         	}
 	         </style>
 	    <?php
