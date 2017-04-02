@@ -13,7 +13,7 @@
 						</div>
 				</div>
 			</nav>
-			<p class="headline">LaPlace - Zurich</p>
+			<p class="headline"><?php echo get_bloginfo( 'name' ); ?></p>
 			<div class="book-button">
 				<a href="#book" class="book">Book a Table</a>
 			</div>
