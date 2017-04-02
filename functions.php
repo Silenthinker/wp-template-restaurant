@@ -6,35 +6,177 @@
 	}
 
 	function mytheme_customize_register( $wp_customize ) {
-	   //All our sections, settings, and controls will be added here
-		$wp_customize->add_section( 'contact_and_opening', array(
-		    'title'          => __( 'Contact and Opening', 'themename' ),
+	    //All our sections, settings, and controls will be added here
+		// section
+		$wp_customize->add_section( 'opening_time', array(
+		    'title'          => __( 'Opening Hour', 'themename' ),
+		    'priority'       => 35,
+		) );
+		$wp_customize->add_section( 'contact', array(
+		    'title'          => __( 'Contacts', 'themename' ),
 		    'priority'       => 35,
 		) );
 		$wp_customize->add_section( 'background_color', array(
 		    'title'          => __( 'Background Color', 'themename' ),
 		    'priority'       => 40,
 		) );
+		// setting
 		$wp_customize->add_setting( 'background_color_scheme', array(
 		    'default'        => '#443333',
 		    'type'           => 'theme_mod',
 		    'transport' 	 => 'refresh', // update by completely reloading itself when this setting is changed
 		) );
-		$wp_customize->add_setting( 'contact_text', array(
-		    'default'        => 'some-default-value',
+		// opening hour
+		$wp_customize->add_setting( 'mon', array(
+		    'default'        => 'Closed',
 		    'type'           => 'theme_mod',
-		    'capability'     => 'edit_theme_options',
 		    'transport' 	 => 'refresh', // update by completely reloading itself when this setting is changed
 		) );
+		$wp_customize->add_setting( 'tue_to_fri', array(
+		    'default'        => '8am - 12am',
+		    'type'           => 'theme_mod',
+		    'transport' 	 => 'refresh', // update by completely reloading itself when this setting is changed
+		) );
+		$wp_customize->add_setting( 'sat_to_sun', array(
+		    'default'        => '7am - 1am',
+		    'type'           => 'theme_mod',
+		    'transport' 	 => 'refresh', // update by completely reloading itself when this setting is changed
+		) );
+		$wp_customize->add_setting( 'holiday', array(
+		    'default'        => '12pm-12am',
+		    'type'           => 'theme_mod',
+		    'transport' 	 => 'refresh', // update by completely reloading itself when this setting is changed
+		) );
+		// contact
+		$wp_customize->add_setting( 'address_1', array(
+		    'default'        => '4578 Zurich',
+		    'type'           => 'theme_mod',
+		    'transport' 	 => 'refresh', // update by completely reloading itself when this setting is changed
+		) );
+		$wp_customize->add_setting( 'address_2', array(
+		    'default'        => 'Badenerstrasse 500',
+		    'type'           => 'theme_mod',
+		    'transport' 	 => 'refresh', // update by completely reloading itself when this setting is changed
+		) );
+		$wp_customize->add_setting( 'phone', array(
+		    'default'        => '(606) 144-0100',
+		    'type'           => 'theme_mod',
+		    'transport' 	 => 'refresh', // update by completely reloading itself when this setting is changed
+		) );
+		$wp_customize->add_setting( 'email', array(
+		    'default'        => 'admin@laplace.com',
+		    'type'           => 'theme_mod',
+		    'transport' 	 => 'refresh', // update by completely reloading itself when this setting is changed
+		) );
+		// background color control
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'background_color', array(
 			'label'      => __( 'Background Color', 'mytheme' ),
 			'section'    => 'background_color',
 			'settings'   => 'background_color_scheme',
 		) ) );
+		// contact and opening
+		$wp_customize->add_control(
+		    new WP_Customize_Control(
+		        $wp_customize,
+		        'mon',
+		        array(
+		            'label'          => __( 'Monday', 'theme_name' ),
+		            'section'        => 'opening_time',
+		            'settings'       => 'mon',
+		            'type'           => 'text',
+		        )
+		    )
+		);
+		$wp_customize->add_control(
+		    new WP_Customize_Control(
+		        $wp_customize,
+		        'tue_to_fri',
+		        array(
+		            'label'          => __( 'Tuesday-Friday', 'theme_name' ),
+		            'section'        => 'opening_time',
+		            'settings'       => 'tue_to_fri',
+		            'type'           => 'text',
+		        )
+		    )
+		);
+		$wp_customize->add_control(
+		    new WP_Customize_Control(
+		        $wp_customize,
+		        'sat_to_sun',
+		        array(
+		            'label'          => __( 'Saturday-Sunday', 'theme_name' ),
+		            'section'        => 'opening_time',
+		            'settings'       => 'sat_to_sun',
+		            'type'           => 'text',
+		        )
+		    )
+		);
+		$wp_customize->add_control(
+		    new WP_Customize_Control(
+		        $wp_customize,
+		        'holiday',
+		        array(
+		            'label'          => __( 'Holidays', 'theme_name' ),
+		            'section'        => 'opening_time',
+		            'settings'       => 'holiday',
+		            'type'           => 'text',
+		        )
+		    )
+		);
+
+		$wp_customize->add_control(
+		    new WP_Customize_Control(
+		        $wp_customize,
+		        'address_1',
+		        array(
+		            'label'          => __( 'Address', 'theme_name' ),
+		            'section'        => 'contact',
+		            'settings'       => 'address_1',
+		            'type'           => 'text',
+		        )
+		    )
+		);
+		$wp_customize->add_control(
+		    new WP_Customize_Control(
+		        $wp_customize,
+		        'address_2',
+		        array(
+		            'label'          => __( 'Detailed Address', 'theme_name' ),
+		            'section'        => 'contact',
+		            'settings'       => 'address_2',
+		            'type'           => 'text',
+		        )
+		    )
+		);
+		$wp_customize->add_control(
+		    new WP_Customize_Control(
+		        $wp_customize,
+		        'phone',
+		        array(
+		            'label'          => __( 'Phone', 'theme_name' ),
+		            'section'        => 'contact',
+		            'settings'       => 'phone',
+		            'type'           => 'text',
+		        )
+		    )
+		);
+		$wp_customize->add_control(
+		    new WP_Customize_Control(
+		        $wp_customize,
+		        'email',
+		        array(
+		            'label'          => __( 'Email', 'theme_name' ),
+		            'section'        => 'contact',
+		            'settings'       => 'email',
+		            'type'           => 'email',
+		        )
+		    )
+		);
 	}
 
 	function mytheme_customize_css()
 	{
+		// background
 	    ?>
 	         <style type="text/css">
 	         	section.event,
