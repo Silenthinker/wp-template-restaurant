@@ -12,7 +12,7 @@
 		    'priority'       => 35,
 		));
 		$wp_customize->add_setting( 'head_background_image_setting', array(
-		    'default'        => 'http://localhost:8888/wordpress/images/header.jpg',
+		    'default'        => get_template_directory_uri() . '/images/header.jpg',
 		    'type'           => 'theme_mod',
 		    'transport' 	 => 'refresh', // update by completely reloading itself when this setting is changed
 		));
