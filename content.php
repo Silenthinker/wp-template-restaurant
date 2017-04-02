@@ -1,6 +1,6 @@
 <main class="content">
 
-	<section class="welcome">
+	<!--<section class="welcome">
 		<div class="welcome-items">
 			<nav class="hidden-list">
 				<div class="dropdown">
@@ -18,9 +18,10 @@
 				<a href="#book" class="book">Book a Table</a>
 			</div>
 		</div>
-	</section>
-	<!-- First About-->
+	</section>-->
 
+	<!-- First About-->
+	<?php get_template_part('welcome')?>
 	<section>
 		<article class="intro welcome-intro">
 			<!--<header>Welcome</header>

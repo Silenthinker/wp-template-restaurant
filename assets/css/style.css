@@ -329,7 +329,7 @@ header.navigation .nav-list li.logo img{
   
 }
 section.welcome{
-	background-image: url("../../images/header.jpg");
+	/*background-image: url("../../images/header.jpg");*/
 
 	background-size:100% 100%;
 	/*padding-bottom: 2em;*/

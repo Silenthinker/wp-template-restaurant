@@ -6,6 +6,22 @@
 	}
 
 	function mytheme_customize_register( $wp_customize ) {
+		/*=====================*/
+		$wp_customize->add_section( 'head_background_image_section', array(
+		    'title'          => __( 'Head Background Image', 'themename' ),
+		    'priority'       => 35,
+		));
+		$wp_customize->add_setting( 'head_background_image_setting', array(
+		    'default'        => 'http://localhost:8888/wordpress/images/header.jpg',
+		    'type'           => 'theme_mod',
+		    'transport' 	 => 'refresh', // update by completely reloading itself when this setting is changed
+		));
+		$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'link_color', array(
+		    'label'   => __( 'Head Background Image', 'themename' ),
+		    'section' => 'head_background_image_section',
+		    'settings'   => 'head_background_image_setting',
+		) ) );
+		/*===================*/
 	    //All our sections, settings, and controls will be added here
 		// section
 		$wp_customize->add_section( 'opening_time', array(
@@ -182,6 +198,9 @@
 	         	section.event,
 	         	section.menu {
 	         		background-color: <?php echo get_theme_mod('background_color_scheme', '#443333'); ?>;
+	         	}
+	         	section.welcome{
+	         		background-image: url(<?php echo get_theme_mod('head_background_image_setting');?>);
 	         	}
 	         </style>
 	    <?php
