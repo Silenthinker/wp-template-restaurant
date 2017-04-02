@@ -23,14 +23,23 @@
 
 	<section>
 		<article class="intro welcome-intro">
-			<header>Welcome</header>
+			<!--<header>Welcome</header>
 			<p>
 			LaPlace Restaurant was founded in May of 2015. The cuisine we serve
 			is created with the utmost attention to details. Our emphasis is on
 			providing fresh, locally sourced, exquisite food. As such our menus
 			change on a regular basis, allowing us to offer you mouth watering,
-			perfectly prepared dishes.<br /></details>
-		</p>
+			perfectly prepared dishes.<br /></details>-->
+			
+			<?php
+				$page = get_page_by_title( 'Welcome' );
+				smk_get_template_part('page.php', array(
+	   					'title' => $page->post_title,
+	   					'content' =>$page->post_content
+				));
+			?>
+			
+		</article>
 
 
 
@@ -38,11 +47,19 @@
 
 
 		<article class="intro intro-with-image">
+			<?php
+				$page = get_page_by_title( 'High Quality Cuisine' );
+				smk_get_template_part('page.php', array(
+	   					'title' => $page->post_title,
+	   					'content' =>$page->post_content
+				));
+			?>
+			<!--
 			<header>High Quality Cuisine</header>
 			<p>
 				Our cuisine is a melting pot of different cultures which have come
 				together to form a unique blend of flavours and techniques.<br />
-			</p>
+			</p>-->
 		</article>
 
 
@@ -50,7 +67,7 @@
 
 
 		<article class="intro best-intro">
-			<header>Only the Best Ingredients</header>
+			<!--<header>Only the Best Ingredients</header>
 			<p>
 				It's vital to our operation to make sure everybody is aware of the
 				quality of the ingredients we use. As the choices we make in terms
@@ -58,7 +75,14 @@
 				such as the healthiness of the food we make to the price you pay for
 				it. That's why on our menus you find the origins of each of our
 				ingredients.<br />
-			</p>
+			</p>-->
+			<?php
+				$page = get_page_by_title( 'Only the Best Ingredients' );
+				smk_get_template_part('page.php', array(
+	   					'title' => $page->post_title,
+	   					'content' =>$page->post_content
+				));
+			?>
 		</article>
 	</section>
 
@@ -303,9 +327,16 @@
 
 
 	<article class="intro event-intro">
-					<header>Our Events</header>
+					<!--<header>Our Events</header>
 					<p>In our Philosophy, a restaurant is not only a place where to eat but also to communicate and know new people. For these reasons we organize various events every month.<br />
-					</p>
+					</p>-->
+					<?php
+						$page = get_page_by_title( 'Our Events' );
+						smk_get_template_part('page.php', array(
+			   					'title' => $page->post_title,
+			   					'content' =>$page->post_content
+						));
+					?>
 	</article>
 			
 	<section class="event">

@@ -48,4 +48,37 @@
 	add_action( 'wp_head', 'mytheme_customize_css');
 	add_action( 'customize_register', 'mytheme_customize_register' );
 	add_action( 'wp_enqueue_scripts', 'add_theme_scripts' );
+
+	if ( ! class_exists('Smk_ThemeView') ) {
+		class Smk_ThemeView{
+			private $args;
+			private $file;
+	 
+			public function __get($name) {
+				return $this->args[$name];
+			}
+	 
+			public function __construct($file, $args = array()) {
+				$this->file = $file;
+				$this->args = $args;
+			}
+	 
+			public function __isset($name){
+				return isset( $this->args[$name] );
+			}
+	 
+			public function render() {
+				if( locate_template($this->file) ){
+					include( locate_template($this->file) );//Theme Check free. Child themes support.
+				}
+			}
+		}
+	}
+	if( ! function_exists('smk_get_template_part') ){
+		function smk_get_template_part($file, $args = array()){
+			$template = new Smk_ThemeView($file, $args);
+			$template->render();
+		}
+	}
+
 ?>
