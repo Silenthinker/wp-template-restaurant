@@ -327,7 +327,7 @@
 		<?php 
 	}
 	add_theme_support( 'post-thumbnails', array( 'event' ) ); 
-	add_image_size( 'cropped', 80, 80, array( 'left', 'top' ) );      
+  
 	// save the data
 	function event_post_save_meta( $post_id, $post ) { 
 		// is the user allowed to edit the post or page? 
