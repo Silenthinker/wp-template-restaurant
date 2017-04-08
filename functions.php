@@ -288,7 +288,7 @@
 				'register_meta_box_cb' => 'add_event_post_type_metabox' 
 			);
 			register_post_type( 'event', $args );
-			register_taxonomy( 'event_custom_category', 'event', array(
+			register_taxonomy( 'custom_category', 'event', array(
 				'hierarchical' => true,
 				'label' => 'type'
 		      	)
@@ -328,6 +328,9 @@
 	  	</div>
 		<?php 
 	}
+
+	add_theme_support( 'post-thumbnails', array( 'event' ) ); 
+  
 
 	// save the data
 	function event_post_save_meta( $post_id, $post ) { 
@@ -379,7 +382,7 @@
 				'register_meta_box_cb' => 'add_dishes_metaboxes'
 			)
 		);
-		register_taxonomy( 'custom_category', 'dishes', array(
+		register_taxonomy( 'dish_custom_category', 'dishes', array(
 				'hierarchical' => true,
 				'label' => 'Food Category'
 		      	)

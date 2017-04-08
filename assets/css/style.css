@@ -972,6 +972,10 @@ div.clip {
 	margin-bottom: 40px;
 }
 
+img.attachment-thumbnail {
+  width: 80px;
+}
+
 .img-anniversary {
 	background: url("../../images/4.jpg") 0 0;
 }

@@ -1,5 +1,6 @@
 <main class="content">
 <?php 
+		// may be dynamic later by far it is fine
 		$titleMap = array();
 		$titleMap['appetizer'] = 'Appetizers';
 		$titleMap['pasta'] = 'Fresh Pasta';
@@ -17,6 +18,7 @@
 		$popupWinID[3] = 'bruschette';
 		$popupWinID[4] = 'meatballs';
 		$popupWinID[5] = 'beans';
+
 		$args = array(
     		'post_type' => 'dishes',
     		'orderby' => array('date' => 'ASC'),
@@ -30,7 +32,7 @@
 						
 								<?php  
 									
-									$catgory =  $reverseTitleMap[get_the_terms( get_the_ID(), 'custom_category' )[0]->name];
+									$catgory =  $reverseTitleMap[get_the_terms( get_the_ID(), 'dish_custom_category' )[0]->name];
 									
 									if($catgory != ''){ 
 										//echo $catgory;  
@@ -81,7 +83,7 @@
 		foreach($dishes_set as $catgory => $dishes){
 			foreach($dishes as $index => $dish){
 				$menuName = $menuName."'".$dish[0]."',";
-				$menuDescription = $menuDescription."'".$dish[0]."',";
+				$menuDescription = $menuDescription."'".str_replace("'", "", $dish[3])."',";
 				$menuUrl = $menuUrl."'".$dish[2]."',";
 			}
 			$menuName = $menuName."],[";
@@ -581,7 +583,9 @@
 				<span ><span  ></span></span>
 				
 				<a href="">
-					<?php echo the_post_thumbnail('cropped'); ?>
+					<?php global $feat_image_url;
+					$feat_image_url = wp_get_attachment_url( get_post_thumbnail_id() ); ?>
+					<div class="clip" style="background-image:url(<?php echo $feat_image_url; ?>)"></div>
 					<h3><?php echo get_post_meta(get_the_ID(),'event_title',true);?></h3>
 					<h2><?php $begintime = DateTime::createFromFormat('Y-m-d\T H:i', get_post_meta(get_the_ID(),'event_datenbegintime',true));
 					$endtime = get_post_meta(get_the_ID(),'event_endtime', true);
