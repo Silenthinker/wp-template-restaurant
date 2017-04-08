@@ -5,7 +5,18 @@
 		$titleMap['pasta'] = 'Fresh Pasta';
 		$titleMap['meat'] = 'Meat-Fish';
 		$titleMap['dessert'] = 'Dessert';
-
+		$reverseTitleMap = array();
+		$reverseTitleMap['Appetizers'] = 'appetizer';
+		$reverseTitleMap['Fresh Pasta'] = 'pasta';
+		$reverseTitleMap['Meat-Fish'] = 'meat';
+		$reverseTitleMap['Dessert'] = 'dessert';
+		$popupWinID = array();
+		$popupWinID[0] = 'bruschettetomato';
+		$popupWinID[1] = 'rolls';
+		$popupWinID[2] = 'eggplants';
+		$popupWinID[3] = 'bruschette';
+		$popupWinID[4] = 'meatballs';
+		$popupWinID[5] = 'beans';
 		$args = array(
     		'post_type' => 'dishes',
     		'orderby' => array('date' => 'ASC'),
@@ -18,15 +29,20 @@
 					$dishPosts->the_post();?>
 						
 								<?php  
-									$catgory = get_post_meta(get_the_ID(),'_category',true);
+									
+									$catgory =  $reverseTitleMap[get_the_terms( get_the_ID(), 'custom_category' )[0]->name];
+									
 									if($catgory != ''){ 
 										//echo $catgory;  
 										//echo '<br/>';
 										$entity = array();
 										$entity[0] = get_the_title();
 										$entity[1] = get_post_meta(get_the_ID(),'_sickname',true);
-										$entity[2] = get_post_meta(get_the_ID(),'_url',true);
+										$entity[2] = get_the_post_thumbnail_url(get_the_ID());
 										$entity[3] = get_the_content();
+										if($entity[3]==''){
+											$entity[3] =get_the_title();
+										}
 										if (array_key_exists($catgory, $dishes_set)) {
 											array_push($dishes_set[$catgory],$entity);
 										}else{
@@ -43,7 +59,7 @@
 		}
 
 		foreach($dishes_set as $catgory => $dishes){
-
+			
 		}
 		$first_key = array_keys($dishes_set)[0];
 
@@ -61,18 +77,24 @@
 		// Output menuNames;
 		$menuName = "var menuNames = [[";
 		$menuDescription = "var menuDescription = [[";
+		$menuUrl = "var menuUrls = [[";
 		foreach($dishes_set as $catgory => $dishes){
 			foreach($dishes as $index => $dish){
 				$menuName = $menuName."'".$dish[0]."',";
 				$menuDescription = $menuDescription."'".$dish[0]."',";
+				$menuUrl = $menuUrl."'".$dish[2]."',";
 			}
 			$menuName = $menuName."],[";
 			$menuDescription  = $menuDescription."],[";
+			$menuUrl  = $menuUrl."],[";
 		}
 		$menuName = substr($menuName, 0,strlen($menuName)-1);
 		$menuName = $menuName."];";
 		$menuDescription = substr($menuDescription, 0,strlen($menuDescription)-1);
 		$menuDescription = $menuDescription."];";
+		$menuUrl = substr($menuUrl, 0,strlen($menuUrl)-1);
+		$menuUrl = $menuUrl."];";
+		echo $menuUrl;
 		echo $menuName;
 		echo $menuDescription;
 
@@ -228,7 +250,7 @@
 				
 				foreach($dishes_set[$first_key] as $index => $dish){
 					smk_get_template_part('modal.php', array(
-	   					'id' => $dish[1],
+	   					'id' => $popupWinID[$index],
 	   					'name' =>$dish[0],
 	   					'content' =>$dish[3]
 					));
@@ -363,7 +385,7 @@
 									<?php
 									smk_get_template_part('grid.php', array(
 					   					'category' => $first_key,
-					   					'index' => 0,
+					   					'url' => $dishes_set[$first_key][0][2],
 					   					'title' => $dishes_set[$first_key][0][0],
 					   					'href' => "bruschettetomato"	
 									));
@@ -374,7 +396,7 @@
 									<?php
 									smk_get_template_part('grid.php', array(
 					   					'category' => $first_key,
-					   					'index' => 1,
+					   					'url' => $dishes_set[$first_key][1][2],
 					   					'title' => $dishes_set[$first_key][1][0],
 					   					'href' => "rolls"	
 									));
@@ -387,7 +409,7 @@
 									<?php
 									smk_get_template_part('grid.php', array(
 					   					'category' => $first_key,
-					   					'index' => 2,
+					   					'url' => $dishes_set[$first_key][2][2],
 					   					'title' => $dishes_set[$first_key][2][0],
 					   					'href' => "eggplants"	
 									));
@@ -397,7 +419,7 @@
 									<?php
 									smk_get_template_part('grid.php', array(
 					   					'category' => $first_key,
-					   					'index' => 3,
+					   					'url' => $dishes_set[$first_key][3][2],
 					   					'title' => $dishes_set[$first_key][3][0],
 					   					'href' => "bruschette"	
 									));
@@ -410,7 +432,7 @@
 									<?php
 									smk_get_template_part('grid.php', array(
 					   					'category' => $first_key,
-					   					'index' => 4,
+					   					'url' => $dishes_set[$first_key][4][2],
 					   					'title' => $dishes_set[$first_key][4][0],
 					   					'href' => "meatballs"	
 									));
@@ -421,7 +443,7 @@
 									<?php
 									smk_get_template_part('grid.php', array(
 					   					'category' => $first_key,
-					   					'index' => 5,
+					   					'url' => $dishes_set[$first_key][5][2],
 					   					'title' => $dishes_set[$first_key][5][0],
 					   					'href' => "beans"	
 									));

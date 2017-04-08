@@ -272,7 +272,7 @@
 				'capability_type' => 'post', 
 				'hierarchical' => false, 
 				'supports' => array(
-					'title',
+					// 'title',
 					'thumbnail', 
 					//'editor', 
 					//'author', 
@@ -288,7 +288,7 @@
 				'register_meta_box_cb' => 'add_event_post_type_metabox' 
 			);
 			register_post_type( 'event', $args );
-			register_taxonomy( 'event', 'event', array(
+			register_taxonomy( 'event_custom_category', 'event', array(
 				'hierarchical' => true,
 				'label' => 'type'
 		      	)
@@ -297,6 +297,8 @@
 		add_action( 'init', 'create_event_post_type' ); 
 	endif;
 	// metabox
+	add_theme_support( 'post-thumbnails', array( 'event' ) ); 
+	add_theme_support( 'post-thumbnails', array( 'dishes' ) );      
 	function add_event_post_type_metabox() {
 		add_meta_box( 'event_metabox', 'Event Data', 'event_metabox', 'event', 'normal' );
 	}
@@ -326,8 +328,7 @@
 	  	</div>
 		<?php 
 	}
-	add_theme_support( 'post-thumbnails', array( 'event' ) ); 
-	add_image_size( 'cropped', 80, 80, array( 'left', 'top' ) );      
+
 	// save the data
 	function event_post_save_meta( $post_id, $post ) { 
 		// is the user allowed to edit the post or page? 
@@ -355,6 +356,7 @@
 	}
 	add_action( 'save_post', 'event_post_save_meta', 1, 2 ); // save the custom fields
 	function wpt_dish_posttype() {
+		 
 		register_post_type( 'dishes',
 			array(
 				'labels' => array(
@@ -377,6 +379,11 @@
 				'register_meta_box_cb' => 'add_dishes_metaboxes'
 			)
 		);
+		register_taxonomy( 'custom_category', 'dishes', array(
+				'hierarchical' => true,
+				'label' => 'Food Category'
+		      	)
+		); 
 	}
 	function add_dishes_metaboxes() {
 		add_meta_box('wpt_dishes_category', 'Dish Category', 'wpt_dishes_catgeory', 'dishes', 'side', 'default');
@@ -398,8 +405,8 @@
         /*echo '<p>Enter the Sick Name:</p>';
         echo '<input type="text" name="_sickname" value="' . $sickname  . '" class="widefat" />';
         echo '<p>Enter the Image URL:</p>';
-        echo '<input type="text" name="_url" value="' . $url  . '" class="widefat" />';
-		*/
+        echo '<input type="text" name="_url" value="' . $url  . '" class="widefat" />';*/
+
 	}
 	// Save the Metabox Data
 
