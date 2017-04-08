@@ -272,7 +272,7 @@
 				'capability_type' => 'post', 
 				'hierarchical' => false, 
 				'supports' => array(
-					// 'title',
+					'title',
 					'thumbnail', 
 					//'editor', 
 					//'author', 
@@ -288,7 +288,7 @@
 				'register_meta_box_cb' => 'add_event_post_type_metabox' 
 			);
 			register_post_type( 'event', $args );
-			register_taxonomy( 'custom_category', 'event', array(
+			register_taxonomy( 'event', 'event', array(
 				'hierarchical' => true,
 				'label' => 'type'
 		      	)
@@ -297,7 +297,6 @@
 		add_action( 'init', 'create_event_post_type' ); 
 	endif;
 	// metabox
-	add_theme_support( 'post-thumbnails', array( 'event' ) );       
 	function add_event_post_type_metabox() {
 		add_meta_box( 'event_metabox', 'Event Data', 'event_metabox', 'event', 'normal' );
 	}
@@ -327,7 +326,7 @@
 	  	</div>
 		<?php 
 	}
-
+	add_theme_support( 'post-thumbnails', array( 'event' ) );       
 	// save the data
 	function event_post_save_meta( $post_id, $post ) { 
 		// is the user allowed to edit the post or page? 

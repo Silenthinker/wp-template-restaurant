@@ -344,21 +344,49 @@
 		<div class="container upcoming-events">
 			<h3><b> Upcoming Events </b></h3>
 			<div class="table flex-container">
+				<?php 
+				$args = array(
+					'post_type' => 'event',
+					'tax_query' => array(
+						array(
+							'taxonomy' => 'event',
+							'field'    => 'name',
+							'terms'    => 'upcoming',
+						),
+					),
+					'posts_per_page' => '3',
+					'order'		=> 'ASC',
+					'orderby' 	=> 'meta_value',
+					'meta_key'  => 'event_datenbegintime',
+				);
+					$eventPosts = new WP_Query($args);
+					if ($eventPosts->have_posts()) :
+						while ($eventPosts->have_posts()) :
+						$eventPosts->the_post(); 
+				?> 
 				<div class="flex-item">
 				<div class="cell">
-							<span ><span  ></span></span>
-						
-							<a href="">
-								<img width = "50%" height="50%"  src="<?php bloginfo('template_directory'); ?>/images/cooking.jpg" alt="" />
-								<h3>Learning to Cook</h3>
-								<h2>12/03/2017 10:30 a.m.</h2>
-							</a>
-						
-						<p>Get the basic skills every home cook needs to be successful and happy in the kitchen. Ditch recipes by learning basic cooking formulas. Come and learn how to <a href=""> [Read More]</a>
-						</p>
+				<span ><span  ></span></span>
 				
-					</div>
+				<a href="">
+					
+					<?php echo the_post_thumbnail( 'thumbnail' ); ?>
+					<h3><?php echo get_post_meta(get_the_ID(),'event_title',true);?></h3>
+					<h2><?php $begintime = DateTime::createFromFormat('Y-m-d\T H:i', get_post_meta(get_the_ID(),'event_datenbegintime',true));
+						$endtime = get_post_meta(get_the_ID(),'event_endtime', true);
+						if ($endtime != '') { echo $begintime->format('d/m/Y H:i').' - '.$endtime;}
+						else {
+							echo $begintime->format('d/m/Y h:i A');
+						}
+						?></h2>
+				</a>
+				
+				<p><?php echo get_post_meta(get_the_ID(), 'event_description', true) ?> <a href=""> [Read More]</a> </p>
 				</div>
+				</div>
+				<?php endwhile;
+				endif; ?>
+				<!--
 				<div class="flex-item">
 				<div class="cell">	
 						<span ><span  ></span></span>
@@ -385,6 +413,7 @@
 						<p>It's Friday!!! Come and enjoy the start of the weekend with us. Our Happy Hours offer the best combination of nice drinks and food. To reserve a sit please register to the event <a href=""> [Read More]</a> </p>
 				</div>	
 				</div>
+				-->
 			</div>
 		</div>
 		</br> </br>
