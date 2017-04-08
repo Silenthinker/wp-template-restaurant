@@ -492,7 +492,9 @@
 						?></h2>
 				</a>
 				
-				<p><?php echo get_post_meta(get_the_ID(), 'event_description', true) ?> <a href=""> [Read More]</a> </p>
+				<p><?php 
+					$description = get_post_meta(get_the_ID(), 'event_description', true);
+					if ($description != '') { echo $description; }?> <a href=""> [Read More]</a> </p>
 				</div>
 				</div>
 				<?php endwhile;
@@ -532,6 +534,46 @@
 		<div  class="container past-events">
 			<h3> <b> Past Events </b> </h3>
 			<div class="table flex-container">
+				<?php 
+					$args = array(
+						'post_type' => 'event',
+						'tax_query' => array(
+							array(
+								'taxonomy' => 'event',
+								'field'    => 'name',
+								'terms'    => 'past',
+							),
+						),
+						'posts_per_page' => '4',
+						'order'		=> 'DESC',
+						'orderby' 	=> 'meta_value',
+						'meta_key'  => 'event_datenbegintime',
+					);
+						$eventPosts = new WP_Query($args);
+						if ($eventPosts->have_posts()) :
+							while ($eventPosts->have_posts()) :
+							$eventPosts->the_post(); 
+				?> 
+				<div class="flex-item">
+				<div class="cell">		
+				<span ><span  ></span></span>
+				
+				<a href="">
+					<?php echo the_post_thumbnail('cropped'); ?>
+					<h3><?php echo get_post_meta(get_the_ID(),'event_title',true);?></h3>
+					<h2><?php $begintime = DateTime::createFromFormat('Y-m-d\T H:i', get_post_meta(get_the_ID(),'event_datenbegintime',true));
+					$endtime = get_post_meta(get_the_ID(),'event_endtime', true);
+					if ($endtime != '') { echo $begintime->format('d/m/Y H:i').' - '.$endtime;}
+					else {
+						echo $begintime->format('d/m/Y h:i A');
+					}
+					?></h2>
+				</a>
+				</div>
+				</div>
+				<?php endwhile;
+				endif; ?>
+				<!--
 				<div class="flex-item">
 				<div class="cell">		
 							<span ><span  ></span></span>
@@ -587,7 +629,8 @@
 							
 							
 					</div>	
-					</div>			
+					</div>	
+				-->		
 			</div>
 		</div>
 		</br> </br>
