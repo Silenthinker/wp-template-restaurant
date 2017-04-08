@@ -356,6 +356,7 @@
 						
 						<p>Get the basic skills every home cook needs to be successful and happy in the kitchen. Ditch recipes by learning basic cooking formulas. Come and learn how to <a href=""> [Read More]</a>
 						</p>
+				
 					</div>
 				</div>
 				<div class="flex-item">
