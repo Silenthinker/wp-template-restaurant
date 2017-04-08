@@ -140,5 +140,6 @@ $(window).scroll(function(){
     checkAnimation();
 });
 $(document).ready(function(){
+    
     checkAnimation();
 });

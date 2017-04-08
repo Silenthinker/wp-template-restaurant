@@ -354,5 +354,88 @@
 		}
 	}
 	add_action( 'save_post', 'event_post_save_meta', 1, 2 ); // save the custom fields
+	function wpt_dish_posttype() {
+		register_post_type( 'dishes',
+			array(
+				'labels' => array(
+					'name' => __( 'Dishes' ),
+					'singular_name' => __( 'Dish' ),
+					'add_new' => __( 'Add New Dish' ),
+					'add_new_item' => __( 'Add New Dish' ),
+					'edit_item' => __( 'Edit Dish' ),
+					'new_item' => __( 'Add New Dish' ),
+					'view_item' => __( 'View Dish' ),
+					'search_items' => __( 'Search Dish' ),
+					'not_found' => __( 'No dishes found' ),
+					'not_found_in_trash' => __( 'No dishes found in trash' )
+				),
+				'public' => true,
+				'supports' => array( 'title', 'editor', 'thumbnail', 'comments' ),
+				'capability_type' => 'post',
+				'rewrite' => array("slug" => "dishes"), // Permalinks format
+				'menu_position' => 5,
+				'register_meta_box_cb' => 'add_dishes_metaboxes'
+			)
+		);
+	}
+	function add_dishes_metaboxes() {
+		add_meta_box('wpt_dishes_category', 'Dish Category', 'wpt_dishes_catgeory', 'dishes', 'side', 'default');
+	}
+	// The Event Location Metabox
 
+	function wpt_dishes_catgeory() {
+		global $post;
+		// Noncename needed to verify where the data originated
+		echo '<input type="hidden" name="dishmeta_noncename" id="dishmeta_noncename" value="' . 
+		wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
+		// Get the location data if its already been entered
+		$category = get_post_meta($post->ID, '_category', true);
+		$sickname = get_post_meta($post->ID, '_sickname', true);
+		$url = get_post_meta($post->ID, '_url', true);
+		// Echo out the field
+		echo '<p>Enter the Category:</p>';
+		echo '<input type="text" name="_category" value="' . $category  . '" class="widefat" />';
+        echo '<p>Enter the Sick Name:</p>';
+        echo '<input type="text" name="_sickname" value="' . $sickname  . '" class="widefat" />';
+        echo '<p>Enter the Image URL:</p>';
+        echo '<input type="text" name="_url" value="' . $url  . '" class="widefat" />';
+
+	}
+	// Save the Metabox Data
+
+	function wpt_save_dishes_meta($post_id, $post) {
+		
+		// verify this came from the our screen and with proper authorization,
+		// because save_post can be triggered at other times
+		if ( !wp_verify_nonce( $_POST['dishmeta_noncename'], plugin_basename(__FILE__) )) {
+			return $post->ID;
+		}
+
+		// Is the user allowed to edit the post or page?
+		if ( !current_user_can( 'edit_post', $post->ID ))
+			return $post->ID;
+
+		// OK, we're authenticated: we need to find and save the data
+		// We'll put it into an array to make it easier to loop though.
+		
+		$events_meta['_category'] = $_POST['_category'];
+		$events_meta['_url'] = $_POST['_url'];
+		$events_meta['_sickname'] = $_POST['_sickname'];
+		// Add values of $events_meta as custom fields
+		
+		foreach ($events_meta as $key => $value) { // Cycle through the $events_meta array!
+			if( $post->post_type == 'revision' ) return; // Don't store custom data twice
+				$value = implode(',', (array)$value); // If $value is an array, make it a CSV (unlikely)
+			if(get_post_meta($post->ID, $key, FALSE)) { // If the custom field already has a value
+				update_post_meta($post->ID, $key, $value);
+			} else { // If the custom field doesn't have a value
+				add_post_meta($post->ID, $key, $value);
+			}
+			if(!$value) delete_post_meta($post->ID, $key); // Delete if blank
+		}
+
+	}
+
+	add_action('save_post', 'wpt_save_dishes_meta', 1, 2); // save the custom fields
+	add_action( 'init', 'wpt_dish_posttype' );
 ?>
