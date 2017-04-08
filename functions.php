@@ -395,11 +395,11 @@
 		// Echo out the field
 		echo '<p>Enter the Category:</p>';
 		echo '<input type="text" name="_category" value="' . $category  . '" class="widefat" />';
-        echo '<p>Enter the Sick Name:</p>';
+        /*echo '<p>Enter the Sick Name:</p>';
         echo '<input type="text" name="_sickname" value="' . $sickname  . '" class="widefat" />';
         echo '<p>Enter the Image URL:</p>';
         echo '<input type="text" name="_url" value="' . $url  . '" class="widefat" />';
-
+		*/
 	}
 	// Save the Metabox Data
 
