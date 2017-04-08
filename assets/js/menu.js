@@ -1,56 +1,6 @@
-var menuTypes = ['appetizer', 'pasta', 'meat', 'dessert'];
-var menuNames = [
-['Bruschette with Tomatoes', 'Green Rolls', 'Eggplants', 'Bruschette', 'Meatballs', 'Spicy Beans'],
-['Home-made Carls Pasta', 'Italian Pasta', 'Semo Pasta', 'Veggie Pasta', 'Craw Pasta', 'Taco Pasta'],
-['Special Duck Confit', 'Baked Fish', 'Swiss Steak', 'Crawfish', 'Veggie Beef', 'Asian Chicken'],
-['Recommended Tiramisu', 'Cheesecake', 'Fired Cannoli', 'Ice Cream', 'Mille-feuille', 'Sweet Mafia'],
-];
-var menuDescription = [
-	['Ah bruschette, one of the best ways to enjoy the bounty of summer. Pronounced “brusketta”, this classic Italian appetizer is a perfect way to capture the flavors of garden ripened tomatoes, fresh basil, garlic, and olive oil. Think of it as summer on toast!.',
-	'The green roll is a great vegetarian option for sushi lovers. Fully wrapped with avocado this roll is both beautiful and delicious.',
-	"Basic grilled eggplant is a simple side dish that lets the vegetable's flavor shine through. To dress things up a bit, try grilled eggplant topped with Toasted-Breadcrumb Salsa Verde.",
-	"Bruschette is an antipasto from Italy consisting of grilled bread rubbed with garlic and topped with olive oil and salt. Variations may include toppings of tomato, vegetables, beans, cured meat, or cheese.",
-	"A meatball is ground or minced meat rolled into a small ball, sometimes along with other ingredients, such as bread crumbs, minced onion, eggs, butter, and seasoning. Meatballs are cooked by frying, baking, steaming, or braising in sauce.",
-	"This vegetarian dish is delicious and versatile. You can eat it on its own, with rice, as a topping for nachos, or as a filling for tacos or burritos."
-	],
-	["Maison Carlos Salad. Red and green leaf lettuces, vine ... Lobster Mac and Cheese. Le trofie pasta, Maine lobster, artisanal cheese blend, shaved black truffles.",
-	"Orecchiette with Mini Chicken Meatballs. Giada's Italian Lasagna. Pasta With Winter Squash and Tomatoes. Shrimp Scampi With Linguini. Baked Penne with Roasted Vegetables.",
-	"Home-style comfort foods & casseroles, vegetarian, allergen friendly options; Pastas, pizzas, burgers, fries, salad bar, dessert bar...",
-	"With a full serving of vegetables per 3.5 oz. portion, Barilla Veggie pasta can make any meal that much healthier and tastier. Try it today!",
-	"A meatball is ground or minced meat rolled into a small ball, sometimes along with other ingredients, such as bread crumbs, minced onion, eggs, butter, and seasoning. Meatballs are cooked by frying, baking, steaming, or braising in sauce.",
-	"This vegetarian dish is delicious and versatile. You can eat it on its own, with rice, as a topping for nachos, or as a filling for tacos or burritos."
-	],
-	['Ah bruschette, one of the best ways to enjoy the bounty of summer. Pronounced “brusketta”, this classic Italian appetizer is a perfect way to capture the flavors of garden ripened tomatoes, fresh basil, garlic, and olive oil. Think of it as summer on toast!.',
-	'The green roll is a great vegetarian option for sushi lovers. Fully wrapped with avocado this roll is both beautiful and delicious.',
-	"Basic grilled eggplant is a simple side dish that lets the vegetable's flavor shine through. To dress things up a bit, try grilled eggplant topped with Toasted-Breadcrumb Salsa Verde.",
-	"Bruschette is an antipasto from Italy consisting of grilled bread rubbed with garlic and topped with olive oil and salt. Variations may include toppings of tomato, vegetables, beans, cured meat, or cheese.",
-	"A meatball is ground or minced meat rolled into a small ball, sometimes along with other ingredients, such as bread crumbs, minced onion, eggs, butter, and seasoning. Meatballs are cooked by frying, baking, steaming, or braising in sauce.",
-	"This vegetarian dish is delicious and versatile. You can eat it on its own, with rice, as a topping for nachos, or as a filling for tacos or burritos."
-	],
-	['Ah bruschette, one of the best ways to enjoy the bounty of summer. Pronounced “brusketta”, this classic Italian appetizer is a perfect way to capture the flavors of garden ripened tomatoes, fresh basil, garlic, and olive oil. Think of it as summer on toast!.',
-	'The green roll is a great vegetarian option for sushi lovers. Fully wrapped with avocado this roll is both beautiful and delicious.',
-	"Basic grilled eggplant is a simple side dish that lets the vegetable's flavor shine through. To dress things up a bit, try grilled eggplant topped with Toasted-Breadcrumb Salsa Verde.",
-	"Bruschette is an antipasto from Italy consisting of grilled bread rubbed with garlic and topped with olive oil and salt. Variations may include toppings of tomato, vegetables, beans, cured meat, or cheese.",
-	"A meatball is ground or minced meat rolled into a small ball, sometimes along with other ingredients, such as bread crumbs, minced onion, eggs, butter, and seasoning. Meatballs are cooked by frying, baking, steaming, or braising in sauce.",
-	"This vegetarian dish is delicious and versatile. You can eat it on its own, with rice, as a topping for nachos, or as a filling for tacos or burritos."
-	],
-	['Ah bruschette, one of the best ways to enjoy the bounty of summer. Pronounced “brusketta”, this classic Italian appetizer is a perfect way to capture the flavors of garden ripened tomatoes, fresh basil, garlic, and olive oil. Think of it as summer on toast!.',
-	'The green roll is a great vegetarian option for sushi lovers. Fully wrapped with avocado this roll is both beautiful and delicious.',
-	"Basic grilled eggplant is a simple side dish that lets the vegetable's flavor shine through. To dress things up a bit, try grilled eggplant topped with Toasted-Breadcrumb Salsa Verde.",
-	"Bruschette is an antipasto from Italy consisting of grilled bread rubbed with garlic and topped with olive oil and salt. Variations may include toppings of tomato, vegetables, beans, cured meat, or cheese.",
-	"A meatball is ground or minced meat rolled into a small ball, sometimes along with other ingredients, such as bread crumbs, minced onion, eggs, butter, and seasoning. Meatballs are cooked by frying, baking, steaming, or braising in sauce.",
-	"This vegetarian dish is delicious and versatile. You can eat it on its own, with rice, as a topping for nachos, or as a filling for tacos or burritos."
-	],
-	['Ah bruschette, one of the best ways to enjoy the bounty of summer. Pronounced “brusketta”, this classic Italian appetizer is a perfect way to capture the flavors of garden ripened tomatoes, fresh basil, garlic, and olive oil. Think of it as summer on toast!.',
-	'The green roll is a great vegetarian option for sushi lovers. Fully wrapped with avocado this roll is both beautiful and delicious.',
-	"Basic grilled eggplant is a simple side dish that lets the vegetable's flavor shine through. To dress things up a bit, try grilled eggplant topped with Toasted-Breadcrumb Salsa Verde.",
-	"Bruschette is an antipasto from Italy consisting of grilled bread rubbed with garlic and topped with olive oil and salt. Variations may include toppings of tomato, vegetables, beans, cured meat, or cheese.",
-	"A meatball is ground or minced meat rolled into a small ball, sometimes along with other ingredients, such as bread crumbs, minced onion, eggs, butter, and seasoning. Meatballs are cooked by frying, baking, steaming, or braising in sauce.",
-	"This vegetarian dish is delicious and versatile. You can eat it on its own, with rice, as a topping for nachos, or as a filling for tacos or burritos."
-	]
-]
-var mq = window.matchMedia('(min-width: 768px)');
 
+
+var mq = window.matchMedia('(min-width: 768px)');
 function getIndexOfSubsection(elem, k) {
     var $elem = $(elem);
 
@@ -170,6 +120,8 @@ function fancyMenuUpdate() {
 }
 
 $(document).ready(function(){
+	
+	
 	fancyMenuUpdate();
 	mq.addListener(fancyMenuUpdate);
 	// disable scrolling in case of popup

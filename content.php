@@ -1,5 +1,134 @@
 <main class="content">
+<?php 
+		$titleMap = array();
+		$titleMap['appetizer'] = 'Appetizers';
+		$titleMap['pasta'] = 'Fresh Pasta';
+		$titleMap['meat'] = 'Meat-Fish';
+		$titleMap['dessert'] = 'Dessert';
 
+		$args = array(
+    		'post_type' => 'dishes',
+    		'orderby' => array('date' => 'ASC'),
+    		'posts_per_page'=>-1
+		);
+		$dishPosts= new WP_Query($args);
+		$dishes_set = array();
+		if($dishPosts->have_posts()){
+				while($dishPosts->have_posts()){
+					$dishPosts->the_post();?>
+						
+								<?php  
+									$catgory = get_post_meta(get_the_ID(),'_category',true);
+									if($catgory != ''){ 
+										//echo $catgory;  
+										//echo '<br/>';
+										$entity = array();
+										$entity[0] = get_the_title();
+										$entity[1] = get_post_meta(get_the_ID(),'_sickname',true);
+										$entity[2] = get_post_meta(get_the_ID(),'_url',true);
+										$entity[3] = get_the_content();
+										if (array_key_exists($catgory, $dishes_set)) {
+											array_push($dishes_set[$catgory],$entity);
+										}else{
+											$a = array();
+											array_push($a,$entity);
+											$dishes_set[$catgory] = $a;
+
+										}
+									}
+								?>
+
+							
+				<?php }
+		}
+
+		foreach($dishes_set as $catgory => $dishes){
+
+		}
+		$first_key = array_keys($dishes_set)[0];
+
+
+?>
+<?php echo "<script>"?>
+	<?php 
+		// Output Menu Type
+		$menuString = "var menuTypes = [";
+		foreach($dishes_set as $catgory => $dishes){
+			$menuString = $menuString."'".$catgory."',";
+		}
+		$menuString = $menuString."];";
+		echo $menuString;
+		// Output menuNames;
+		$menuName = "var menuNames = [[";
+		$menuDescription = "var menuDescription = [[";
+		foreach($dishes_set as $catgory => $dishes){
+			foreach($dishes as $index => $dish){
+				$menuName = $menuName."'".$dish[0]."',";
+				$menuDescription = $menuDescription."'".$dish[0]."',";
+			}
+			$menuName = $menuName."],[";
+			$menuDescription  = $menuDescription."],[";
+		}
+		$menuName = substr($menuName, 0,strlen($menuName)-1);
+		$menuName = $menuName."];";
+		$menuDescription = substr($menuDescription, 0,strlen($menuDescription)-1);
+		$menuDescription = $menuDescription."];";
+		echo $menuName;
+		echo $menuDescription;
+
+	?>
+	//var menuTypes = ['appetizer', 'pasta', 'meat', 'dessert'];
+	/*var menuNames = [
+	['Bruschette with Tomatoes', 'Green Rolls', 'Eggplants', 'Bruschette', 'Meatballs', 'Spicy Beans'],
+	['Home-made Carls Pasta', 'Italian Pasta', 'Semo Pasta', 'Veggie Pasta', 'Craw Pasta', 'Taco Pasta'],
+	['Special Duck Confit', 'Baked Fish', 'Swiss Steak', 'Crawfish', 'Veggie Beef', 'Asian Chicken'],
+	['Recommended Tiramisu', 'Cheesecake', 'Fired Cannoli', 'Ice Cream', 'Mille-feuille', 'Sweet Mafia'],
+	];*/
+	/*var menuDescription = [
+		['Ah bruschette, one of the best ways to enjoy the bounty of summer. Pronounced “brusketta”, this classic Italian appetizer is a perfect way to capture the flavors of garden ripened tomatoes, fresh basil, garlic, and olive oil. Think of it as summer on toast!.',
+		'The green roll is a great vegetarian option for sushi lovers. Fully wrapped with avocado this roll is both beautiful and delicious.',
+		"Basic grilled eggplant is a simple side dish that lets the vegetable's flavor shine through. To dress things up a bit, try grilled eggplant topped with Toasted-Breadcrumb Salsa Verde.",
+		"Bruschette is an antipasto from Italy consisting of grilled bread rubbed with garlic and topped with olive oil and salt. Variations may include toppings of tomato, vegetables, beans, cured meat, or cheese.",
+		"A meatball is ground or minced meat rolled into a small ball, sometimes along with other ingredients, such as bread crumbs, minced onion, eggs, butter, and seasoning. Meatballs are cooked by frying, baking, steaming, or braising in sauce.",
+		"This vegetarian dish is delicious and versatile. You can eat it on its own, with rice, as a topping for nachos, or as a filling for tacos or burritos."
+		],
+		["Maison Carlos Salad. Red and green leaf lettuces, vine ... Lobster Mac and Cheese. Le trofie pasta, Maine lobster, artisanal cheese blend, shaved black truffles.",
+		"Orecchiette with Mini Chicken Meatballs. Giada's Italian Lasagna. Pasta With Winter Squash and Tomatoes. Shrimp Scampi With Linguini. Baked Penne with Roasted Vegetables.",
+		"Home-style comfort foods & casseroles, vegetarian, allergen friendly options; Pastas, pizzas, burgers, fries, salad bar, dessert bar...",
+		"With a full serving of vegetables per 3.5 oz. portion, Barilla Veggie pasta can make any meal that much healthier and tastier. Try it today!",
+		"A meatball is ground or minced meat rolled into a small ball, sometimes along with other ingredients, such as bread crumbs, minced onion, eggs, butter, and seasoning. Meatballs are cooked by frying, baking, steaming, or braising in sauce.",
+		"This vegetarian dish is delicious and versatile. You can eat it on its own, with rice, as a topping for nachos, or as a filling for tacos or burritos."
+		],
+		['Ah bruschette, one of the best ways to enjoy the bounty of summer. Pronounced “brusketta”, this classic Italian appetizer is a perfect way to capture the flavors of garden ripened tomatoes, fresh basil, garlic, and olive oil. Think of it as summer on toast!.',
+		'The green roll is a great vegetarian option for sushi lovers. Fully wrapped with avocado this roll is both beautiful and delicious.',
+		"Basic grilled eggplant is a simple side dish that lets the vegetable's flavor shine through. To dress things up a bit, try grilled eggplant topped with Toasted-Breadcrumb Salsa Verde.",
+		"Bruschette is an antipasto from Italy consisting of grilled bread rubbed with garlic and topped with olive oil and salt. Variations may include toppings of tomato, vegetables, beans, cured meat, or cheese.",
+		"A meatball is ground or minced meat rolled into a small ball, sometimes along with other ingredients, such as bread crumbs, minced onion, eggs, butter, and seasoning. Meatballs are cooked by frying, baking, steaming, or braising in sauce.",
+		"This vegetarian dish is delicious and versatile. You can eat it on its own, with rice, as a topping for nachos, or as a filling for tacos or burritos."
+		],
+		['Ah bruschette, one of the best ways to enjoy the bounty of summer. Pronounced “brusketta”, this classic Italian appetizer is a perfect way to capture the flavors of garden ripened tomatoes, fresh basil, garlic, and olive oil. Think of it as summer on toast!.',
+		'The green roll is a great vegetarian option for sushi lovers. Fully wrapped with avocado this roll is both beautiful and delicious.',
+		"Basic grilled eggplant is a simple side dish that lets the vegetable's flavor shine through. To dress things up a bit, try grilled eggplant topped with Toasted-Breadcrumb Salsa Verde.",
+		"Bruschette is an antipasto from Italy consisting of grilled bread rubbed with garlic and topped with olive oil and salt. Variations may include toppings of tomato, vegetables, beans, cured meat, or cheese.",
+		"A meatball is ground or minced meat rolled into a small ball, sometimes along with other ingredients, such as bread crumbs, minced onion, eggs, butter, and seasoning. Meatballs are cooked by frying, baking, steaming, or braising in sauce.",
+		"This vegetarian dish is delicious and versatile. You can eat it on its own, with rice, as a topping for nachos, or as a filling for tacos or burritos."
+		],
+		['Ah bruschette, one of the best ways to enjoy the bounty of summer. Pronounced “brusketta”, this classic Italian appetizer is a perfect way to capture the flavors of garden ripened tomatoes, fresh basil, garlic, and olive oil. Think of it as summer on toast!.',
+		'The green roll is a great vegetarian option for sushi lovers. Fully wrapped with avocado this roll is both beautiful and delicious.',
+		"Basic grilled eggplant is a simple side dish that lets the vegetable's flavor shine through. To dress things up a bit, try grilled eggplant topped with Toasted-Breadcrumb Salsa Verde.",
+		"Bruschette is an antipasto from Italy consisting of grilled bread rubbed with garlic and topped with olive oil and salt. Variations may include toppings of tomato, vegetables, beans, cured meat, or cheese.",
+		"A meatball is ground or minced meat rolled into a small ball, sometimes along with other ingredients, such as bread crumbs, minced onion, eggs, butter, and seasoning. Meatballs are cooked by frying, baking, steaming, or braising in sauce.",
+		"This vegetarian dish is delicious and versatile. You can eat it on its own, with rice, as a topping for nachos, or as a filling for tacos or burritos."
+		],
+		['Ah bruschette, one of the best ways to enjoy the bounty of summer. Pronounced “brusketta”, this classic Italian appetizer is a perfect way to capture the flavors of garden ripened tomatoes, fresh basil, garlic, and olive oil. Think of it as summer on toast!.',
+		'The green roll is a great vegetarian option for sushi lovers. Fully wrapped with avocado this roll is both beautiful and delicious.',
+		"Basic grilled eggplant is a simple side dish that lets the vegetable's flavor shine through. To dress things up a bit, try grilled eggplant topped with Toasted-Breadcrumb Salsa Verde.",
+		"Bruschette is an antipasto from Italy consisting of grilled bread rubbed with garlic and topped with olive oil and salt. Variations may include toppings of tomato, vegetables, beans, cured meat, or cheese.",
+		"A meatball is ground or minced meat rolled into a small ball, sometimes along with other ingredients, such as bread crumbs, minced onion, eggs, butter, and seasoning. Meatballs are cooked by frying, baking, steaming, or braising in sauce.",
+		"This vegetarian dish is delicious and versatile. You can eat it on its own, with rice, as a topping for nachos, or as a filling for tacos or burritos."
+		]
+	]*/
+<?php echo "</script>"?>
 	<!--<section class="welcome">
 		<div class="welcome-items">
 			<nav class="hidden-list">
@@ -90,95 +219,111 @@
 
 	<!-- Menu -->
 	<section class="popup">
-	<div id="bruschettetomato" class="modal">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <header class="container group"> 
-	        <h2>Bruschette with Tomatoes</h2><a href="#modal" class="closebtn">×</a>
-	      </header>
-	      <figure>
-	      </figure>
-	      <article class="container">
-	        <p>Ah bruschette, one of the best ways to enjoy the bounty of summer. Pronounced “brusketta”, this classic Italian appetizer is a perfect way to capture the flavors of garden ripened tomatoes, fresh basil, garlic, and olive oil. Think of it as summer on toast!.</p>
-	      </article>
-	    </div>
-	  </div>
-	</div>
+		<?php
+				/*$page = get_page_by_title( 'Only the Best Ingredients' );
+				smk_get_template_part('page.php', array(
+	   					'title' => $page->post_title,
+	   					'content' =>$page->post_content
+				));*/
+				
+				foreach($dishes_set[$first_key] as $index => $dish){
+					smk_get_template_part('modal.php', array(
+	   					'id' => $dish[1],
+	   					'name' =>$dish[0],
+	   					'content' =>$dish[3]
+					));
+				}
+				
+		?>
+		<!--<div id="bruschettetomato" class="modal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <header class="container group"> 
+		        <h2>Bruschette with Tomatoes</h2><a href="#modal" class="closebtn">×</a>
+		      </header>
+		      <figure>
+		      </figure>
+		      <article class="container">
+		        <p>Ah bruschette, one of the best ways to enjoy the bounty of summer. Pronounced “brusketta”, this classic Italian appetizer is a perfect way to capture the flavors of garden ripened tomatoes, fresh basil, garlic, and olive oil. Think of it as summer on toast!.</p>
+		      </article>
+		    </div>
+		  </div>
+		</div>
 
-	<div id="rolls" class="modal">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <header class="container group"> 
-	        <h2>Green Rolls</h2><a href="#modal" class="closebtn">×</a>
-	      </header>
-	      <figure>
-	      </figure>
-	      <article class="container">
-	        <p>The green roll is a great vegetarian option for sushi lovers. Fully wrapped with avocado this roll is both beautiful and delicious.</p>
-	      </article>
-	    </div>
-	  </div>
-	</div>
+		<div id="rolls" class="modal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <header class="container group"> 
+		        <h2>Green Rolls</h2><a href="#modal" class="closebtn">×</a>
+		      </header>
+		      <figure>
+		      </figure>
+		      <article class="container">
+		        <p>The green roll is a great vegetarian option for sushi lovers. Fully wrapped with avocado this roll is both beautiful and delicious.</p>
+		      </article>
+		    </div>
+		  </div>
+		</div>
 
-	<div id="eggplants" class="modal">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <header class="container group"> 
-	        <h2>Eggplants</h2><a href="#modal" class="closebtn">×</a>
-	      </header>
-	      <figure>
-	      </figure>
-	      <article class="container">
-	        <p>Basic grilled eggplant is a simple side dish that lets the vegetable's flavor shine through. To dress things up a bit, try grilled eggplant topped with Toasted-Breadcrumb Salsa Verde.</p>
-	      </article>
-	    </div>
-	  </div>
-	</div>
+		<div id="eggplants" class="modal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <header class="container group"> 
+		        <h2>Eggplants</h2><a href="#modal" class="closebtn">×</a>
+		      </header>
+		      <figure>
+		      </figure>
+		      <article class="container">
+		        <p>Basic grilled eggplant is a simple side dish that lets the vegetable's flavor shine through. To dress things up a bit, try grilled eggplant topped with Toasted-Breadcrumb Salsa Verde.</p>
+		      </article>
+		    </div>
+		  </div>
+		</div>
 
-	<div id="bruschette" class="modal">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <header class="container group"> 
-	        <h2>Bruschette</h2><a href="#modal" class="closebtn">×</a>
-	      </header>
-	      <figure>
-	      </figure>
-	      <article class="container">
-	        <p>Bruschette is an antipasto from Italy consisting of grilled bread rubbed with garlic and topped with olive oil and salt. Variations may include toppings of tomato, vegetables, beans, cured meat, or cheese.</p>
-	      </article>
-	    </div>
-	  </div>
-	</div>
+		<div id="bruschette" class="modal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <header class="container group"> 
+		        <h2>Bruschette</h2><a href="#modal" class="closebtn">×</a>
+		      </header>
+		      <figure>
+		      </figure>
+		      <article class="container">
+		        <p>Bruschette is an antipasto from Italy consisting of grilled bread rubbed with garlic and topped with olive oil and salt. Variations may include toppings of tomato, vegetables, beans, cured meat, or cheese.</p>
+		      </article>
+		    </div>
+		  </div>
+		</div>
 
-	<div id="meatballs" class="modal">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <header class="container group"> 
-	        <h2>Meatballs</h2><a href="#modal" class="closebtn">×</a>
-	      </header>
-	      <figure>
-	      </figure>
-	      <article class="container">
-	        <p>A meatball is ground or minced meat rolled into a small ball, sometimes along with other ingredients, such as bread crumbs, minced onion, eggs, butter, and seasoning. Meatballs are cooked by frying, baking, steaming, or braising in sauce.</p>
-	      </article>
-	    </div>
-	  </div>
-	</div>
+		<div id="meatballs" class="modal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <header class="container group"> 
+		        <h2>Meatballs</h2><a href="#modal" class="closebtn">×</a>
+		      </header>
+		      <figure>
+		      </figure>
+		      <article class="container">
+		        <p>A meatball is ground or minced meat rolled into a small ball, sometimes along with other ingredients, such as bread crumbs, minced onion, eggs, butter, and seasoning. Meatballs are cooked by frying, baking, steaming, or braising in sauce.</p>
+		      </article>
+		    </div>
+		  </div>
+		</div>
 
-	<div id="beans" class="modal">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <header class="container group"> 
-	        <h2>Spicy Beans</h2><a href="#modal" class="closebtn">×</a>
-	      </header>
-	      <figure>
-	      </figure>
-	      <article class="container">
-	        <p>This vegetarian dish is delicious and versatile. You can eat it on its own, with rice, as a topping for nachos, or as a filling for tacos or burritos.</p>
-	      </article>
-	    </div>
-	  </div>
-	</div>
+		<div id="beans" class="modal">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <header class="container group"> 
+		        <h2>Spicy Beans</h2><a href="#modal" class="closebtn">×</a>
+		      </header>
+		      <figure>
+		      </figure>
+		      <article class="container">
+		        <p>This vegetarian dish is delicious and versatile. You can eat it on its own, with rice, as a topping for nachos, or as a filling for tacos or burritos.</p>
+		      </article>
+		    </div>
+		  </div>
+		</div>-->
 	</section>
 
 	<section class="menu">
@@ -188,16 +333,26 @@
 					<section class="overview col-5" width="36%">
 						<div >
 							<header>Our Menu</header>
-							<h3>Appetizers</h3>
+							<h3><?php 
+								
+								echo $titleMap[$first_key];
+							?></h3>
 							<p>We serve a seasonal tasting menu that focuses on local
 								ingredients. Our appetizers may vary during the year to always
 								ensure the best quality. For the appetizers, we are famous for
 								our bruschettas that we serve in several different variants.</p>
 							<nav class="overview-list">
-								<a alt="appetizer">Appetizers</a> 
+								<?php foreach($dishes_set as $catgory => $dishes){
+								?>
+
+								<?php 
+									echo "<a alt='".$catgory."'>".$titleMap[$catgory]."</a>";
+
+								}?>
+								<!--<a alt="appetizer">Appetizers</a> 
 								<a alt="pasta">Fresh Pasta</a> 
 								<a alt="meat">Meat-Fish</a> 
-								<a alt="dessert">Dessert</a>
+								<a alt="dessert">Dessert</a>-->
 							</nav>
 
 						</div>
@@ -205,116 +360,72 @@
 					<section  class="imageview col-7" width="64%">
 							<section class="row">
 								<section width="50%" class="col-6">
-
-									<div class="view-content" style="background-image: url('<?php bloginfo('template_directory'); ?>/images/appetizer-0.jpg')">
-										<!--<img width = "90%" height="90%"  src="images/appetizer-0.jpg" alt="" />-->
-
-										<div class="tag">
-											<div class="card special">
-												<div class="front face">
-													<a href="#bruschettetomato"> Bruschette with Tomatoes </a>
-												</div>
-												<div class="back face">
-													<a> Bruschette with Tomatoes </a>
-												</div>
-											</div>
-										</div>
-										
-									</div>
+									<?php
+									smk_get_template_part('grid.php', array(
+					   					'category' => $first_key,
+					   					'index' => 0,
+					   					'title' => $dishes_set[$first_key][0][0],
+					   					'href' => "bruschettetomato"	
+									));
+									?>
+									
 								</section>
 								<section width="50%" class="col-6">
-									<div class="view-content" style="background-image: url('<?php bloginfo('template_directory'); ?>/images/appetizer-1.jpg')">
-										<!--<img width="90%" height="90%"  src="images/appetizer-1.jpg" alt="" />-->
-										<div class="tag">
-											<div class="card">
-												<div class="front face">
-													<a href="#rolls"> Green Rolls </a>
-												</div>
-												<div class="back face">
-													<a> Green Rolls </a>
-												</div>
-											</div>
-										</div>
-
-										
-
-									</div>
+									<?php
+									smk_get_template_part('grid.php', array(
+					   					'category' => $first_key,
+					   					'index' => 1,
+					   					'title' => $dishes_set[$first_key][1][0],
+					   					'href' => "rolls"	
+									));
+									?>
 								</section>
 							</section>
 							<section class="row">
 								<section width="50%" class="col-6">
 
-									<div class="view-content" style="background-image: url('<?php bloginfo('template_directory'); ?>/images/appetizer-2.jpg')">
-										<!--<img width= "90%" height="90%"  src="images/appetizer-2.jpg" alt="" />-->
-										
-										<div class="tag">
-											<div class="card">
-												<div class="front face">
-													<a href="#eggplants">Eggplants </a>
-												</div>
-												<div class="back face">
-													<a> Eggplants </a>
-												</div>
-											</div>
-										</div>
-										
-									</div>
+									<?php
+									smk_get_template_part('grid.php', array(
+					   					'category' => $first_key,
+					   					'index' => 2,
+					   					'title' => $dishes_set[$first_key][2][0],
+					   					'href' => "eggplants"	
+									));
+									?>
 								</section>
 								<section width="50%" class="col-6">
-									<div class="view-content" style="background-image: url('<?php bloginfo('template_directory'); ?>/images/appetizer-3.jpg')">
-										<!--<img width= "90%"  height="90%"  src="images/appetizer-3.jpg" alt="" />-->
-										
-										<div class="tag">
-											<div class="card">
-												<div class="front face">
-													<a href="#bruschette">Bruschette </a>
-												</div>
-												<div class="back face">
-													<a> Bruschette </a>
-												</div>
-											</div>
-										</div>
-										
-
-									</div>
+									<?php
+									smk_get_template_part('grid.php', array(
+					   					'category' => $first_key,
+					   					'index' => 3,
+					   					'title' => $dishes_set[$first_key][3][0],
+					   					'href' => "bruschette"	
+									));
+									?>
 								</section>
 							</section>
 							<section class="row">
 								<section width="50%" class="col-6">
 
-									<div class="view-content" style="background-image: url('<?php bloginfo('template_directory'); ?>/images/appetizer-4.jpg')">
-										<!--<img width = "90%" height="90%" src="images/appetizer-4.jpg" alt="" />-->
-										
-										<div class="tag">
-											<div class="card">
-												<div class="front face">
-													<a href="#meatballs">Meatballs </a>
-												</div>
-												<div class="back face">
-													<a> Meatballs </a>
-												</div>
-											</div>
-										</div>
-										
-									</div>
+									<?php
+									smk_get_template_part('grid.php', array(
+					   					'category' => $first_key,
+					   					'index' => 4,
+					   					'title' => $dishes_set[$first_key][4][0],
+					   					'href' => "meatballs"	
+									));
+									?>
+									
 								</section>
 								<section width="50%" class="col-6">
-									<div class="view-content" style="background-image: url('<?php bloginfo('template_directory'); ?>/images/appetizer-5.jpg')">
-										<!--<img width="90%" height="90%"  src="images/appetizer-5.jpg" alt="" />-->
-										<div class="tag">
-											<div class="card">
-												<div class="front face">
-													<a href="#beans">Spicy Beans</a>
-												</div>
-												<div class="back face">
-													<a>Spicy Beans </a>
-												</div>
-											</div>
-										</div>
-
-										
-
-									</div>
+									<?php
+									smk_get_template_part('grid.php', array(
+					   					'category' => $first_key,
+					   					'index' => 5,
+					   					'title' => $dishes_set[$first_key][5][0],
+					   					'href' => "beans"	
+									));
+									?>
 								</section>
 							</section>
 					</section>
