@@ -272,7 +272,7 @@
 				'capability_type' => 'post', 
 				'hierarchical' => false, 
 				'supports' => array(
-					// 'title',
+					 'title',
 					'thumbnail', 
 					//'editor', 
 					//'author', 
@@ -288,7 +288,7 @@
 				'register_meta_box_cb' => 'add_event_post_type_metabox' 
 			);
 			register_post_type( 'event', $args );
-			register_taxonomy( 'custom_category', 'event', array(
+			register_taxonomy( 'event', 'event', array(
 				'hierarchical' => true,
 				'label' => 'type'
 		      	)
@@ -448,4 +448,62 @@
 
 	add_action('save_post', 'wpt_save_dishes_meta', 1, 2); // save the custom fields
 	add_action( 'init', 'wpt_dish_posttype' );
+
+
+	// AJAX to load more past events
+	wp_enqueue_script( 'ajax-load-more-posts',  get_template_directory_uri() . '/assets/js/functions.js', array ( 'jquery' ), 1.1, true );
+
+	wp_localize_script( 'ajax-load-more-posts', 'ajaxmoreposts', array(
+		'ajaxurl' => admin_url( 'admin-ajax.php' )
+	));
+
+	function ajax_more_posts(){
+	    $ppp = (isset($_POST["ppp"])) ? $_POST["ppp"] : 4;
+	    $page = (isset($_POST['pageNumber'])) ? $_POST['pageNumber'] : 0;
+
+	    header("Content-Type: text/html");
+
+	    $args = array(
+			'post_type' => 'event',
+			'tax_query' => array(
+				array(
+					'taxonomy' => 'event',
+					'field'    => 'name',
+					'terms'    => 'past',
+				),
+			),
+			'posts_per_page' => $ppp,
+			'paged'    		 => $page,
+			'order'			 => 'DESC',
+			'orderby' 		 => 'meta_value',
+			'meta_key'  	 => 'event_datenbegintime',
+		);
+
+		$wp_query = new WP_Query($args);
+		$out = '';
+		if ($wp_query->have_posts()) : while ($wp_query->have_posts()) : $wp_query->the_post(); 
+		$feat_image_url = wp_get_attachment_url( get_post_thumbnail_id() );
+		$begintime = DateTime::createFromFormat('Y-m-d\T H:i', get_post_meta(get_the_ID(),'event_datenbegintime',true));
+		$endtime = get_post_meta(get_the_ID(),'event_endtime', true);
+		$res = '';
+		if ($endtime != '') {  
+			$res = $begintime->format('d/m/Y H:i').' - '.$endtime;
+		} else {
+			$res = $begintime->format('d/m/Y h:i A');
+		}
+        $out .= '<div class="flex-item">
+				<div class="cell">		
+					<span ><span  ></span></span>
+					<a href=""><div class="clip" style="background-image:url('.$feat_image_url.')"></div>
+					<h3>'.get_post_meta(get_the_ID(),'event_title',true).'</h3>
+					<h2>'.$res.'</h2></a></div></div>';
+	    endwhile;
+	    endif;
+	    wp_reset_postdata();
+	    die($out);
+	}
+	add_action( 'wp_ajax_nopriv_ajax_more_posts', 'ajax_more_posts' );
+	add_action( 'wp_ajax_ajax_more_posts', 'ajax_more_posts' );
+
+	
 ?>

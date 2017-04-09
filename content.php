@@ -557,7 +557,7 @@
 		
 		<div  class="container past-events">
 			<h3> <b> Past Events </b> </h3>
-			<div class="table flex-container">
+			<div class="table flex-container" id='ajax-posts'>
 				<?php 
 					$args = array(
 						'post_type' => 'event',
@@ -573,10 +573,10 @@
 						'orderby' 	=> 'meta_value',
 						'meta_key'  => 'event_datenbegintime',
 					);
-						$eventPosts = new WP_Query($args);
-						if ($eventPosts->have_posts()) :
-							while ($eventPosts->have_posts()) :
-							$eventPosts->the_post(); 
+						$wp_query = new WP_Query($args);
+						if ($wp_query->have_posts()) :
+							while ($wp_query->have_posts()) :
+							$wp_query->the_post(); 
 				?> 
 				<div class="flex-item">
 				<div class="cell">		
@@ -599,72 +599,12 @@
 				</div>
 				<?php endwhile;
 				endif; ?>
-				<!--
-				<div class="flex-item">
-				<div class="cell">		
-							<span ><span  ></span></span>
-							
-							<a href="">
-								<div class="clip img-anniversary">
-								</div>	
-
-								<h3>10th Anniversary</h3>
-								<h2>01/12/2016 18:00 - 23:00</h2>
-							</a>
-							
-							
-					</div>
-					</div>
-				<div class="flex-item">
-				<div class="cell">		
-							<span ><span  ></span></span>
-							
-							<a href="">
-								<div class="clip img-pasta"></div>
-								<h3>Pasta Day</h3>
-								<h2>20/11/2016 18:00 - 23:00</h2>
-							</a>
-							
-							
-					</div>
-					</div>
-				
-				<div class="flex-item">
-				<div class="cell">		
-							<span ><span  ></span></span>
-							
-							<a href="">
-								<div class="clip img-happy"></div>
-								<h3>Happy Hour</h3>
-								<h2>11/11/2016 18:00 - 23:00</h2>
-							</a>
-							
-							
-				</div>
-				</div>
-
-				<div class="flex-item">
-				<div class="cell">		
-							<span ><span  ></span></span>
-							
-							<a href="">
-							<div class="clip img-cooking"></div>
-								<h3>Salsa</h3>
-								<h2>01/11/2016 18:00 - 23:00</h2>
-							</a>
-							
-							
-					</div>	
-					</div>	
-				-->		
 			</div>
 		</div>
 		</br> </br>
 		<div class="container">
 			<div class="button">
-				
-					<a href="#second">See More</a>
-				
+				<a id="more_posts" href="#second">See More</a>
 			</div>
 		</div>
 	</section>
