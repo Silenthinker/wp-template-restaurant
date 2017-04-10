@@ -609,7 +609,7 @@
 			</div>
 		</div>
 		<div class="detail-event">
-			HHH I am Here
+			
 		</div>
 		
 	</section>
