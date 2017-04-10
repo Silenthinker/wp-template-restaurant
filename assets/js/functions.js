@@ -29,7 +29,6 @@ function load_posts(){
     return false;
 }
 
-
 jQuery( document ).on( 'click', '#more_posts', function() {
     $("#more_posts").attr("disabled",true); // Disable the button, temp.
     load_posts();

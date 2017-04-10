@@ -604,7 +604,7 @@
 		</br> </br>
 		<div class="container">
 			<div class="button">
-				<a id="more_posts" href="#second">See More</a>
+				<a id="more_posts" href="javascript:void(0);">See More</a>
 			</div>
 		</div>
 	</section>

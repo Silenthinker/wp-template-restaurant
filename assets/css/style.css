@@ -826,11 +826,11 @@ div.container img {
 
 section.event div.container .cell h3 {
 	margin: 0px;
-	font-size: 1.6em;
+	font-size: 1.4em;
 }
 
 section.event div.container .cell h2 {
-	font-size: 1.4em;
+	font-size: 1.2em;
 }
 
 section.event div.container .cell p {
@@ -854,6 +854,7 @@ div.container.past-events {
    position: relative;
    left: -100%;
 }
+
 
 div.container > h3 {
 	text-align: center;
