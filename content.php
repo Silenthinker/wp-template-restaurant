@@ -503,7 +503,7 @@
 				<div class="cell">
 				<span ><span  ></span></span>
 				
-				<a href="">
+				
 					
 					<?php echo the_post_thumbnail( 'thumbnail' ); ?>
 					<h3><?php echo get_post_meta(get_the_ID(),'event_title',true);?></h3>
@@ -514,7 +514,7 @@
 							echo $begintime->format('d/m/Y h:i A');
 						}
 						?></h2>
-				</a>
+				
 				
 				<p><?php 
 					$description = get_post_meta(get_the_ID(), 'event_description', true);
@@ -582,7 +582,7 @@
 				<div class="cell">		
 				<span ><span  ></span></span>
 				
-				<a href="">
+				
 					<?php global $feat_image_url;
 					$feat_image_url = wp_get_attachment_url( get_post_thumbnail_id() ); ?>
 					<div class="clip" style="background-image:url(<?php echo $feat_image_url; ?>)"></div>
@@ -594,7 +594,7 @@
 						echo $begintime->format('d/m/Y h:i A');
 					}
 					?></h2>
-				</a>
+				
 				</div>
 				</div>
 				<?php endwhile;
@@ -602,11 +602,16 @@
 			</div>
 		</div>
 		</br> </br>
-		<div class="container">
+		
+		<div class="container see-button">
 			<div class="button">
 				<a id="more_posts" href="#second">See More</a>
 			</div>
 		</div>
+		<div class="detail-event">
+			HHH I am Here
+		</div>
+		
 	</section>
 		
 	<!-- Basic Elements -->

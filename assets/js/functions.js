@@ -33,5 +33,42 @@ function load_posts(){
 jQuery( document ).on( 'click', '#more_posts', function() {
     $("#more_posts").attr("disabled",true); // Disable the button, temp.
     load_posts();
+});
+var state = {
+        id: 2,
+        name: "detail"
+};
+$(document).ready(function(){
     
-})
+    $(".detail-event").hide();
+    $(".clip").click(function(){
+        //$(".past-events").css("display","none");
+        //$(".upcoming-events").css("display","none");
+        //$(".see-button").css("display","none");
+         // do AJAX in DETAIL-EVENT Block
+        
+        $.ajax({
+            type: "post",
+            dataType: "html",
+            /*url: ajaxmoreposts.ajaxurl,
+            data: str,*/
+            url:"./test.json",
+            success: function(data){
+                console.log(data);
+                $(".detail-event").css("display","block");
+                $(".detail-event").html(data);
+            },
+            error : function(jqXHR, textStatus, errorThrown) {
+                $loader.html(jqXHR + " :: " + textStatus + " :: " + errorThrown);
+            }
+        });
+        window.history.pushState(state, "", "./event-details");
+    });
+    window.addEventListener("popstate", function(e) {
+            var state = window.history.state;
+            console.log(state);
+            $(".detail-event").css("display","none");
+    });
+    
+});
+

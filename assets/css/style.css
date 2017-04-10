@@ -7,6 +7,9 @@ Tags: web-engineering
 */
 
 /*Section 1*/
+.detail-event{
+  color: white;
+}
 * {
 	box-sizing: border-box;
 	font-family: 'Roboto', sans-serif;
