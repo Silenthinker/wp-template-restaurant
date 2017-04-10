@@ -33,6 +33,8 @@ jQuery( document ).on( 'click', '#more_posts', function() {
     $("#more_posts").attr("disabled",true); // Disable the button, temp.
     load_posts();
 });
+
+
 var state = {
         id: 2,
         name: "detail"

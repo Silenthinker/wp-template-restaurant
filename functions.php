@@ -502,8 +502,8 @@
 	    wp_reset_postdata();
 	    die($out);
 	}
+
 	add_action( 'wp_ajax_nopriv_ajax_more_posts', 'ajax_more_posts' );
 	add_action( 'wp_ajax_ajax_more_posts', 'ajax_more_posts' );
-
 	
 ?>

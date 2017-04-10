@@ -505,7 +505,7 @@
 				
 				
 					
-					<?php echo the_post_thumbnail( 'thumbnail' ); ?>
+					<div class="thumbnail" id="<?php echo get_the_ID();?>"><?php echo the_post_thumbnail( 'thumbnail' ); ?></div>
 					<h3><?php echo get_post_meta(get_the_ID(),'event_title',true);?></h3>
 					<h2><?php $begintime = DateTime::createFromFormat('Y-m-d\T H:i', get_post_meta(get_the_ID(),'event_datenbegintime',true));
 						$endtime = get_post_meta(get_the_ID(),'event_endtime', true);
@@ -585,7 +585,7 @@
 				
 					<?php global $feat_image_url;
 					$feat_image_url = wp_get_attachment_url( get_post_thumbnail_id() ); ?>
-					<div class="clip" style="background-image:url(<?php echo $feat_image_url; ?>)"></div>
+					<div class="clip thumbnail" id="<?php echo get_the_ID();?>" style="background-image:url(<?php echo $feat_image_url; ?>)"></div>
 					<h3><?php echo get_post_meta(get_the_ID(),'event_title',true);?></h3>
 					<h2><?php $begintime = DateTime::createFromFormat('Y-m-d\T H:i', get_post_meta(get_the_ID(),'event_datenbegintime',true));
 					$endtime = get_post_meta(get_the_ID(),'event_endtime', true);
