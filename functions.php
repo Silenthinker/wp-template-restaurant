@@ -535,8 +535,8 @@
 	        $out .= '<div class="flex-item">
 					<div class="cell">		
 						<span ><span  ></span></span>
-						<div class="clip thumbnail" style="background-image:url('.$feat_image_url.')" id='.get_the_ID().'></div>
-						<h3>'.get_post_meta(get_the_ID(),'event_title',true).'</h3>
+						<div class="clip thumbnail clickable" style="background-image:url('.$feat_image_url.')" id='.get_the_ID().'></div>
+						<h3 class="clickable" id='.get_the_ID().'>'.get_post_meta(get_the_ID(),'event_title',true).'</h3>
 						<h2>'.$res.'</h2></div></div>';
 		    endwhile;
 		    endif;

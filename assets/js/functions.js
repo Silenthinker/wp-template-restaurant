@@ -38,7 +38,7 @@ var state = {
 };
 
 $(".detail-event").hide();
-jQuery( document ).on( 'click', '.thumbnail', function() {
+jQuery( document ).on( 'click', '.thumbnail, h3.clickable', function() {
     var height = $("section.event").css("height");
      // do AJAX in DETAIL-EVENT Block
     var post_id = this.id;
