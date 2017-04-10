@@ -41,9 +41,10 @@ $(document).ready(function(){
     
     $(".detail-event").hide();
     $(".clip").click(function(){
-        //$(".past-events").css("display","none");
-        //$(".upcoming-events").css("display","none");
-        //$(".see-button").css("display","none");
+        var height = $("section.event").css("height");
+        $(".past-events").css("display","none");
+        $(".upcoming-events").css("display","none");
+        $(".see-button").css("display","none");
          // do AJAX in DETAIL-EVENT Block
         
         $.ajax({
@@ -54,7 +55,7 @@ $(document).ready(function(){
             url:"./test.json",
             success: function(data){
                 console.log(data);
-                $(".detail-event").css("display","block");
+                $(".detail-event").css({"display":"block", "height":height});
                 $(".detail-event").html(data);
             },
             error : function(jqXHR, textStatus, errorThrown) {
