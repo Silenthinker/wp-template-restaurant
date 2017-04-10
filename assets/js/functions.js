@@ -40,9 +40,6 @@ var state = {
 $(".detail-event").hide();
 jQuery( document ).on( 'click', '.thumbnail', function() {
     var height = $("section.event").css("height");
-    $(".past-events").css("display","none");
-    $(".upcoming-events").css("display","none");
-    $(".see-button").css("display","none");
      // do AJAX in DETAIL-EVENT Block
     var post_id = this.id;
     var call_type = 2;
@@ -53,6 +50,9 @@ jQuery( document ).on( 'click', '.thumbnail', function() {
         url: ajaxmoreposts.ajaxurl,
         data: str,
         success: function(data){
+            $(".past-events").css("display","none");
+            $(".upcoming-events").css("display","none");
+            $(".see-button").css("display","none");
             $(".detail-event").css({"display":"block", "height":height});
             $(".detail-event").html(data);
         },
