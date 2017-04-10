@@ -464,8 +464,38 @@
 		die($out);
 		*/
 		if($_POST["call_type"]==2){
-			$out = "Success";
 			$id = $_POST['post_id'];
+			$out = '';
+			header("Content-Type: text/html");
+
+		    $args = array(
+				'post_type' => 'event',
+				'p'			=> $id,
+				'tax_query' => array(
+					array(
+						'taxonomy' => 'event',
+						'field'    => 'name',
+						'terms'    => 'past',
+					),
+				),
+			);
+			$wp_query = new WP_Query($args);
+			if ($wp_query->have_posts()) : $wp_query->the_post(); 
+			$feat_image_url = wp_get_attachment_url( get_post_thumbnail_id() );
+			$begintime = DateTime::createFromFormat('Y-m-d\T H:i', get_post_meta(get_the_ID(),'event_datenbegintime',true));
+			$endtime = get_post_meta(get_the_ID(),'event_endtime', true);
+			$description = get_post_meta(get_the_ID(), 'event_description', true);
+			$res = '';
+			if ($endtime != '') {  
+				$res = $begintime->format('d/m/Y H:i').' - '.$endtime;
+			} else {
+				$res = $begintime->format('d/m/Y h:i A');
+			}
+	        $out .= '<div class="detailed">
+		        		<div class="thumbnail" style="background-image:url('.$feat_image_url.')" id='.get_the_ID().'></div>
+						<h3>'.get_post_meta(get_the_ID(),'event_title',true).'</h3>
+						<h2>'.$res.'</h2><p>'.$description.'</p></div>';
+			endif;
 			wp_reset_postdata();
 		    die($out);
 		}else{
@@ -505,12 +535,11 @@
 	        $out .= '<div class="flex-item">
 					<div class="cell">		
 						<span ><span  ></span></span>
-						<a href=""><div class="clip" style="background-image:url('.$feat_image_url.')"></div>
+						<div class="clip thumbnail" style="background-image:url('.$feat_image_url.')" id='.get_the_ID().'></div>
 						<h3>'.get_post_meta(get_the_ID(),'event_title',true).'</h3>
-						<h2>'.$res.'</h2></a></div></div>';
+						<h2>'.$res.'</h2></div></div>';
 		    endwhile;
 		    endif;
-		    $out = "Head";
 		    wp_reset_postdata();
 		    die($out);
 		}

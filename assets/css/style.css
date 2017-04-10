@@ -7,9 +7,6 @@ Tags: web-engineering
 */
 
 /*Section 1*/
-.detail-event{
-  color: white;
-}
 * {
 	box-sizing: border-box;
 	font-family: 'Roboto', sans-serif;
@@ -990,6 +987,35 @@ div.clip {
 .img-cooking {
 	background: url("../../images/cooking.jpg") 0 0;
 }
+
+div.detailed {
+  text-align: center;
+  width: 50%;
+  margin: auto;
+}
+
+div.detailed div.thumbnail {
+  width: 400px;
+  height: 400px;
+  margin: 20px auto;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
+div.detailed h3 {
+  font-size: 2em;
+}
+
+div.detailed h2 {
+  font-size: 1.8em;
+}
+
+div.detailed p {
+  font-size: 1.6em;
+  line-height: 200%;
+}
+
 /* Contact us */
 div.container.contact-us {
 	width: 60%;
