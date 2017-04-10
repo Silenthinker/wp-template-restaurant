@@ -11,6 +11,7 @@ function load_posts(){
         url: ajaxmoreposts.ajaxurl,
         data: str,
         success: function(data){
+            alert(data);
             var $data = $(data);
             if($data.length){
                 $("#ajax-posts").append($data);
@@ -46,15 +47,15 @@ $(document).ready(function(){
         $(".upcoming-events").css("display","none");
         $(".see-button").css("display","none");
          // do AJAX in DETAIL-EVENT Block
-        
+        var post_id = this.id;
+        var call_type = 2;
+        var str = '&post_id='+post_id+"&call_type="+call_type+'&action=ajax_more_posts'; //'&pageNumber=' + pageNumber + '&ppp=' + ppp + '&action=ajax_more_posts';
         $.ajax({
             type: "post",
             dataType: "html",
-            /*url: ajaxmoreposts.ajaxurl,
-            data: str,*/
-            url:"./test.json",
+            url: ajaxmoreposts.ajaxurl,
+            data: str,
             success: function(data){
-                console.log(data);
                 $(".detail-event").css({"display":"block", "height":height});
                 $(".detail-event").html(data);
             },
@@ -66,8 +67,11 @@ $(document).ready(function(){
     });
     window.addEventListener("popstate", function(e) {
             var state = window.history.state;
-            console.log(state);
+            
             $(".detail-event").css("display","none");
+            $(".past-events").show();
+            $(".upcoming-events").show();
+            $(".see-button").show();
     });
     
 });
