@@ -1003,6 +1003,10 @@ div.detailed div.thumbnail {
   background-position: 50% 50%;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 div.detailed h3 {
   font-size: 2em;
 }
