@@ -35,8 +35,7 @@
 									$catgory =  $reverseTitleMap[get_the_terms( get_the_ID(), 'dish_custom_category' )[0]->name];
 									
 									if($catgory != ''){ 
-										//echo $catgory;  
-										//echo '<br/>';
+										
 										$entity = array();
 										$entity[0] = get_the_title();
 										$entity[1] = get_post_meta(get_the_ID(),'_sickname',true);
@@ -153,25 +152,7 @@
 		]
 	]*/
 <?php echo "</script>"?>
-	<!--<section class="welcome">
-		<div class="welcome-items">
-			<nav class="hidden-list">
-				<div class="dropdown">
-						<button class="dropbtn">Dropdown</button>
-						<div class="dropdown-content">
-						<a href="#">About</a>
-						<a href="#">Menu</a>
-						<a href="#">Events</a>
-						<a href="#">Contacts</a>
-						</div>
-				</div>
-			</nav>
-			<p class="headline"><?php echo get_bloginfo( 'name' ); ?></p>
-			<div class="book-button">
-				<a href="#book" class="book">Book a Table</a>
-			</div>
-		</div>
-	</section>-->
+	
 
 	<!-- First About-->
 	<?php get_template_part('welcome')?>
@@ -358,7 +339,6 @@
 						<div >
 							<header>Our Menu</header>
 							<h3><?php 
-								
 								echo $titleMap[$first_key];
 							?></h3>
 							<p>We serve a seasonal tasting menu that focuses on local
@@ -371,7 +351,6 @@
 
 								<?php 
 									echo "<a alt='".$catgory."'>".$titleMap[$catgory]."</a>";
-
 								}?>
 								<!--<a alt="appetizer">Appetizers</a> 
 								<a alt="pasta">Fresh Pasta</a> 
