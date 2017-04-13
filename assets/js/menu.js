@@ -45,7 +45,7 @@ function fancyMenuUpdate() {
 	$(window).scroll(function(){ // windown scroll not responsive to media queries!
 		if (mq.matches) {
 			// dynamic menu highlight
-			var k = 10; // divide menu section to k slices
+			var k = 5; // divide menu section to k slices
 			var idx = getIndexOfSubsection($('section.menu'), k);
 			if (!(idx > (k-4)/2 && idx < (k+4)/2+1)) return;
 			idx = idx - (k-4)/2;

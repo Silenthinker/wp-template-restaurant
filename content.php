@@ -368,7 +368,8 @@
 					   					'category' => $first_key,
 					   					'url' => $dishes_set[$first_key][0][2],
 					   					'title' => $dishes_set[$first_key][0][0],
-					   					'href' => "bruschettetomato"	
+					   					'href' => "bruschettetomato",
+					   					'index' => 1	
 									));
 									?>
 									
@@ -453,7 +454,7 @@
 						));
 					?>
 	</article>
-			
+	
 	<section class="event">
 		<div class="container upcoming-events">
 			<h3><b> Upcoming Events </b></h3>

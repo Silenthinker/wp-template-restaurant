@@ -71,4 +71,4 @@ $(document).ready(function(){
             $(".upcoming-events").show();
             $(".see-button").show();
     });
-};
+});

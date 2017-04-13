@@ -11,7 +11,7 @@
 						</div>
 				</div>
 			</nav>
-			<p class="headline"><?php echo get_bloginfo( 'name' ); ?></p>
+			<p class="headline"><?php echo get_bloginfo( 'name' )."——".get_bloginfo( 'description' ); ?></p>
 			<div class="book-button">
 				<a href="#book" class="book">Book a Table</a>
 			</div>

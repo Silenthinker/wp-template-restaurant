@@ -544,8 +544,9 @@
 		    die($out);
 		}
 	}
-
+	add_filter( 'show_admin_bar', '__return_false' );
 	add_action( 'wp_ajax_nopriv_ajax_more_posts', 'ajax_more_posts' );
 	add_action( 'wp_ajax_ajax_more_posts', 'ajax_more_posts' );
+	// add_action('disable_admin_bar', 'disable_admin_bar');
 	
 ?>
