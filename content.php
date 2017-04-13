@@ -1,4 +1,83 @@
 <main class="content">
+	<?php
+	$args = array(
+				'post_type' => 'event',
+				'tax_query' => array(
+					array(
+						'taxonomy' => 'event',
+						'field'    => 'name',
+						'terms'    => 'past',
+					),
+				),
+				'posts_per_page' => $ppp,
+				'paged'    		 => $page,
+				'order'			 => 'DESC',
+				'orderby' 		 => 'meta_value',
+				'meta_key'  	 => 'event_datenbegintime',
+			);
+	$wp_query_1 = new WP_Query($args);
+	$args = array(
+				'post_type' => 'event',
+				'tax_query' => array(
+					array(
+						'taxonomy' => 'event',
+						'field'    => 'name',
+						'terms'    => 'upcoming',
+					),
+				),
+				'posts_per_page' => $ppp,
+				'paged'    		 => $page,
+				'order'			 => 'DESC',
+				'orderby' 		 => 'meta_value',
+				'meta_key'  	 => 'event_datenbegintime',
+			);
+	$wp_query_2 = new WP_Query($args);
+	$result = array_merge($wp_query_2,$wp_query_1);
+	$upcomingeventPosts = [];
+	$past_event = [];
+	$count = 0;
+	if ($wp_query_1->have_posts()){
+		while ($wp_query_1->have_posts()){
+			$wp_query_1->the_post();
+			$begintime = DateTime::createFromFormat('Y-m-d\T H:i', get_post_meta(get_the_ID(),'event_datenbegintime',true));
+			if($begintime->diff(new DateTime)->format('%R') == '+') {
+			 	 array_push($past_event,get_the_ID());
+			 	
+			}else{
+				 array_push($upcomingeventPosts,get_the_ID());
+				 
+				
+				 
+			}
+			
+		}
+	}
+	//echo "<div>".$count."</div>";
+	//$count = 0;
+	if ($wp_query_2->have_posts()){
+		while ($wp_query_2->have_posts()){
+			$wp_query_2->the_post();
+			$begintime = DateTime::createFromFormat('Y-m-d\T H:i', get_post_meta(get_the_ID(),'event_datenbegintime',true));
+			if($begintime->diff(new DateTime)->format('%R') == '+') {
+				 array_push($past_event,get_the_ID());
+
+			 	 
+			 	 
+			}else{
+				 array_push($upcomingeventPosts,get_the_ID());
+				 
+				 
+			}
+			
+			
+		}
+	}
+	echo "<div> Upcoming ".count($upcomingeventPosts)."</div>";
+	echo "<div> Past".count($past_event)."</div>";
+	
+	
+?>
+
 <?php 
 		// may be dynamic later by far it is fine
 		$titleMap = array();
@@ -454,7 +533,7 @@
 						));
 					?>
 	</article>
-	
+
 	<section class="event">
 		<div class="container upcoming-events">
 			<h3><b> Upcoming Events </b></h3>
@@ -462,22 +541,23 @@
 				<?php 
 				$args = array(
 					'post_type' => 'event',
-					'tax_query' => array(
+					/*'tax_query' => array(
 						array(
 							'taxonomy' => 'event',
 							'field'    => 'name',
 							'terms'    => 'upcoming',
 						),
-					),
+					),*/
+					'post__in'      => $upcomingeventPosts,
 					'posts_per_page' => '3',
 					'order'		=> 'ASC',
 					'orderby' 	=> 'meta_value',
 					'meta_key'  => 'event_datenbegintime',
 				);
-					$eventPosts = new WP_Query($args);
-					if ($eventPosts->have_posts()) :
-						while ($eventPosts->have_posts()) :
-						$eventPosts->the_post(); 
+					$upcomingeventPosts = new WP_Query($args);
+					if ($upcomingeventPosts->have_posts()) :
+						while ($upcomingeventPosts->have_posts()) :
+						$upcomingeventPosts->the_post(); 
 				?> 
 				<div class="flex-item">
 				<div class="cell">
@@ -538,25 +618,29 @@
 		<div  class="container past-events">
 			<h3> <b> Past Events </b> </h3>
 			<div class="table flex-container" id='ajax-posts'>
-				<?php 
+
+				<?php
+					//echo "<div>".count($past_event)."</div>" ;
 					$args = array(
 						'post_type' => 'event',
-						'tax_query' => array(
+						/*'tax_query' => array(
 							array(
 								'taxonomy' => 'event',
 								'field'    => 'name',
 								'terms'    => 'past',
 							),
-						),
+						),*/
+						'post__in'      => $past_event,
 						'posts_per_page' => '4',
 						'order'		=> 'DESC',
 						'orderby' 	=> 'meta_value',
 						'meta_key'  => 'event_datenbegintime',
 					);
-						$wp_query = new WP_Query($args);
-						if ($wp_query->have_posts()) :
-							while ($wp_query->have_posts()) :
-							$wp_query->the_post(); 
+						$past_event = new WP_Query($args);
+						if ($past_event ->have_posts()) :
+							while ($past_event->have_posts()) :
+
+							$past_event ->the_post(); 
 				?> 
 				<div class="flex-item">
 				<div class="cell">		

@@ -499,12 +499,7 @@
 			wp_reset_postdata();
 		    die($out);
 		}else{
-		    $ppp = (isset($_POST["ppp"])) ? $_POST["ppp"] : 4;
-		    $page = (isset($_POST['pageNumber'])) ? $_POST['pageNumber'] : 0;
-
-		    header("Content-Type: text/html");
-
-		    $args = array(
+			$args = array(
 				'post_type' => 'event',
 				'tax_query' => array(
 					array(
@@ -513,6 +508,85 @@
 						'terms'    => 'past',
 					),
 				),
+				'posts_per_page' => $ppp,
+				'paged'    		 => $page,
+				'order'			 => 'DESC',
+				'orderby' 		 => 'meta_value',
+				'meta_key'  	 => 'event_datenbegintime',
+			);
+			$wp_query_1 = new WP_Query($args);
+			$args = array(
+						'post_type' => 'event',
+						'tax_query' => array(
+							array(
+								'taxonomy' => 'event',
+								'field'    => 'name',
+								'terms'    => 'upcoming',
+							),
+						),
+						'posts_per_page' => $ppp,
+						'paged'    		 => $page,
+						'order'			 => 'DESC',
+						'orderby' 		 => 'meta_value',
+						'meta_key'  	 => 'event_datenbegintime',
+					);
+			$wp_query_2 = new WP_Query($args);
+			$result = array_merge($wp_query_2,$wp_query_1);
+			$upcomingeventPosts = [];
+			$past_event = [];
+			$count = 0;
+			if ($wp_query_1->have_posts()){
+				while ($wp_query_1->have_posts()){
+					$wp_query_1->the_post();
+					$begintime = DateTime::createFromFormat('Y-m-d\T H:i', get_post_meta(get_the_ID(),'event_datenbegintime',true));
+					if($begintime->diff(new DateTime)->format('%R') == '+') {
+					 	 array_push($past_event,the_post());
+					 	
+					}else{
+						 array_push($upcomingeventPosts,the_post());
+						 
+						
+						 
+					}
+					
+				}
+			}
+			//echo "<div>".$count."</div>";
+			//$count = 0;
+			if ($wp_query_2->have_posts()){
+				while ($wp_query_2->have_posts()){
+					$wp_query_2->the_post();
+					$begintime = DateTime::createFromFormat('Y-m-d\T H:i', get_post_meta(get_the_ID(),'event_datenbegintime',true));
+					if($begintime->diff(new DateTime)->format('%R') == '+') {
+						 array_push($past_event,get_the_ID());
+
+					 	 
+					 	 
+					}else{
+						 array_push($upcomingeventPosts,get_the_ID());
+						 
+						 
+					}
+					
+					
+				}
+			}
+			// ============================================
+		    $ppp = (isset($_POST["ppp"])) ? $_POST["ppp"] : 4;
+		    $page = (isset($_POST['pageNumber'])) ? $_POST['pageNumber'] : 0;
+
+		    header("Content-Type: text/html");
+
+		    $args = array(
+				'post_type' => 'event',
+				/*'tax_query' => array(
+					array(
+						'taxonomy' => 'event',
+						'field'    => 'name',
+						'terms'    => 'past',
+					),
+				),*/
+		    	'post__in'      => $past_event,
 				'posts_per_page' => $ppp,
 				'paged'    		 => $page,
 				'order'			 => 'DESC',
